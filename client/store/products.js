@@ -32,7 +32,7 @@ export const fetchProducts = () => {
 
 ///If necessary, add in addProducts
 
-export default function productReducer(state = initialState, action) {
+export default function productsReducer(state = initialState, action) {
   switch (action.type) {
     case SET_PRODUCTS:
       return action.products
