@@ -1,5 +1,5 @@
 const db = require('../server/db')
-const faker = require('faker')
+let faker = require('faker')
 const {green, red} = require('chalk')
 const {User, Product} = require('../server/db/models')
 
@@ -26,7 +26,7 @@ const getRandomProducts = num => {
       name: faker.commerce.productName(),
       description: faker.lorem.sentences(),
       imageUrl: faker.random.image(),
-      price: randomFloat(1, 2000),
+      price: randomFloat(1, 1000),
       category: faker.commerce.product()
     }
     products.push(randomProduct)
@@ -39,7 +39,6 @@ const seed = async () => {
     await db.sync({force: true})
     await Promise.all(
       getRandomUsers(100).map(user => {
-        console.log(user)
         return User.create(user)
       })
     ).then(() =>

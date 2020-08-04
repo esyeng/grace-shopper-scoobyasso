@@ -22,10 +22,10 @@ const Product = db.define('product', {
       'https://www.bandg.com/assets/img/default-product-img.png?w=400&h=225&scale=both&mode=max'
   },
   price: {
-    type: Sequelize.DECIMAL(2, 1),
+    type: Sequelize.FLOAT,
     validate: {
       min: 0.0,
-      max: Infinity
+      max: 1000
     }
   },
   category: {
