@@ -19,7 +19,7 @@ describe('Product routes', () => {
         description:
           'Sit ut amet earum aut ad aut quo. Alias et fugit molestiae ut est vel quasi. Ullam ad laboriosam. Quaerat expedita pariatur possimus voluptatem. Autem dolores sint animi iste enim aut sit corporis ullam.',
         imageUrl: 'http://lorempixel.com/640/480/city',
-        price: 952.57,
+        price: 952,
         category: 'Computer'
       })
     })

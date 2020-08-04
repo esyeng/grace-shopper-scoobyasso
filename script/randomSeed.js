@@ -6,12 +6,17 @@ const {User, Product} = require('../server/db/models')
 function randomFloat(min, max) {
   return Math.round(min + (max - min) * Math.random() * 100) / 100
 }
+function randomNum(min, max) {
+  return Math.floor(min + (max - min) * Math.random())
+}
 
 const getRandomUsers = num => {
   let users = []
   for (let i = 0; i < num; i++) {
     let randomUser = {
       email: faker.internet.email(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
       password: faker.internet.password()
     }
     users.push(randomUser)
@@ -26,7 +31,7 @@ const getRandomProducts = num => {
       name: faker.commerce.productName(),
       description: faker.lorem.sentences(),
       imageUrl: faker.random.image(),
-      price: randomFloat(1, 1000),
+      price: randomNum(1, 2000),
       category: faker.commerce.product()
     }
     products.push(randomProduct)

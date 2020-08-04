@@ -8,6 +8,10 @@ function randomFloat(min, max) {
   return Math.round(min + (max - min) * Math.random() * 100) / 100
 }
 
+function randomNum(min, max) {
+  return Math.floor(min + (max - min) * Math.random())
+}
+
 describe('Product model', () => {
   beforeEach(() => {
     return db.sync({force: true})
@@ -47,7 +51,7 @@ describe('seed file', () => {
           name: faker.commerce.productName(),
           description: faker.lorem.paragraph(),
           imageUrl: faker.random.image(),
-          price: randomFloat(1, 2000),
+          price: randomNum(1, 2000),
           category: faker.commerce.product()
         }
         products.push(randomProduct)
