@@ -10,13 +10,14 @@ describe('User model', () => {
   })
 
   describe('admin priveledges', () => {
+    let cody
     beforeEach(async () => {
       cody = await User.create({
         email: 'cody@puppybook.com',
         password: 'bones'
       })
     })
-    xit('is set to false for every new user', () => {
+    it('is set to false for every new user', () => {
       expect(cody.isAdmin).to.be.equal(false)
     })
   })

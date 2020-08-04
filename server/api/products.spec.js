@@ -22,10 +22,9 @@ describe('Product routes', () => {
         price: 952.57,
         category: 'Computer'
       })
-      console.log(randomItem)
     })
 
-    it('GET /api/products', async () => {
+    it('gets all products in an array', async () => {
       const res = await request(app)
         .get('/api/products')
         .expect(200)
@@ -33,7 +32,7 @@ describe('Product routes', () => {
       expect(res.body).to.be.an('array')
       expect(res.body[0].name).to.be.equal('Licensed Metal Cheese')
     })
-    it('GET /api/products/1', async () => {
+    it('returns product by id', async () => {
       const res = await request(app)
         .get('/api/products/1')
         .expect(200)
