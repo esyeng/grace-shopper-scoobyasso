@@ -3,15 +3,15 @@ body {
   background: #0cebeb; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
-    #29ffc6,
-    #20e3b2,
-    #0cebeb
+    #b1d9e7,
+    #b1d9e7,
+    #b1d9e7
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
-    #29ffc6,
-    #20e3b2,
-    #0cebeb
+    #60b2ce,
+    #b1d9e7,
+    #60b2ce
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -34,6 +34,39 @@ form div {
 }
 
 .productImage {
-  height: 40px;
-  width: 40px;
+  height: 75px;
+  width: 75px;
+  border-radius: 25px;
+  display: block;
+  object-position: center center;
+  margin: 0 auto;
+}
+
+.productContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.productDiv {
+  border: 2px solid black;
+  margin: 20px;
+  padding: 10px;
+  width: 20%;
+}
+
+.productName {
+  text-align: center;
+}
+.productName:hover {
+  color: #fcc003;
+}
+
+.productDiv:hover {
+  background-color: #bfa3da;
+}
+
+.productPrice {
+  padding-top: 10px;
+  text-align: center;
 }

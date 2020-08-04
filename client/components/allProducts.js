@@ -8,13 +8,13 @@ class AllProducts extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="productContainer">
         {this.props.allProducts.map(product => {
           return (
-            <div key={product.id}>
-              <h3>{product.name}</h3>
-              <div>${product.price}</div>
+            <div className="productDiv" key={product.id}>
+              <h3 className="productName">{product.name}</h3>
               <img className="productImage" src={product.imageUrl} />
+              <div className="productPrice">${product.price}</div>
             </div>
           )
         })}
