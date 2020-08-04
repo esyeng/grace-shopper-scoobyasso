@@ -25,7 +25,7 @@ const Product = db.define('product', {
     type: Sequelize.FLOAT,
     validate: {
       min: 0.0,
-      max: 1000
+      max: Infinity
     }
   },
   category: {
