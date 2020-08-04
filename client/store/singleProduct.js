@@ -40,10 +40,10 @@ export const fetchSingleProduct = id => {
 //     }
 // }
 
-export default function productReducer(state = [], action) {
+export default function productReducer(state = {}, action) {
   switch (action.types) {
     case SET_SINGLE_PRODUCT:
-      return action.id
+      return action.product
     case UPDATE_PRODUCT:
       return {
         ...state,
@@ -52,7 +52,7 @@ export default function productReducer(state = [], action) {
         price: action.product.price
       } ///Later on add imageUrl and Category
     case DELETE_PRODUCT:
-      return [...state.filter(item => item.id !== action.id)]
+      return {}
     default:
       return state
   }
