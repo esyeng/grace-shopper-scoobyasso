@@ -9,6 +9,19 @@ describe('User model', () => {
     return db.sync({force: true})
   })
 
+  describe('admin priveledges', () => {
+    let cody
+    beforeEach(async () => {
+      cody = await User.create({
+        email: 'cody@puppybook.com',
+        password: 'bones'
+      })
+    })
+    it('is set to false for every new user', () => {
+      expect(cody.isAdmin).to.be.equal(false)
+    })
+  })
+
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
       let cody
