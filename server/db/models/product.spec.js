@@ -2,6 +2,12 @@ const {expect} = require('chai')
 const db = require('../index')
 const {Sequelize} = require('sequelize')
 const Product = db.model('product')
+const faker = require('faker')
+
+function randomFloat(min, max) {
+  return Math.round(min + (max - min) * Math.random() * 100) / 100
+}
+
 describe('Product model', () => {
   beforeEach(() => {
     return db.sync({force: true})
