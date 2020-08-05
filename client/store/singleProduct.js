@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+const initialState = {}
 //ACTION TYPES
 const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
@@ -23,7 +24,9 @@ export const updateSingleProduct = product => ({
 export const fetchSingleProduct = id => {
   return async dispatch => {
     try {
-      const {data: productFetched} = await axios.get(`/api/products/${id}`)
+      console.log('running THUNK @@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+      const {data: productFetched} = await axios.get(`/api/products/1`)
+      console.log(productFetched)
       dispatch(setSingleProduct(productFetched))
     } catch (error) {
       console.error(error)
@@ -40,10 +43,11 @@ export const fetchSingleProduct = id => {
 //     }
 // }
 
-export default function productReducer(state = [], action) {
+export default function productReducer(state = initialState, action) {
   switch (action.types) {
     case SET_SINGLE_PRODUCT:
-      return action.id
+      console.log('INSIDE REDUCER@@@@@@@', action.product)
+      return action.product
     case UPDATE_PRODUCT:
       return {
         ...state,

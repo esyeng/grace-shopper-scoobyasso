@@ -4,18 +4,13 @@ import {fetchSingleProduct} from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
-    this.props.fetchSingleProduct()
+    this.props.fetchSingleProduct(1)
   }
   render() {
+    const {singleProduct} = this.props
     return (
       <div className="singleProductContainer">
-        {this.props.singleProduct(product => {
-          return (
-            <div className="singleProductDiv" key={product.id}>
-              <h1 className="productName">{product.name}</h1>
-            </div>
-          )
-        })}
+        {/* <img className="productImage" src={singleProduct.imageUrl} /> */}
       </div>
     )
   }
