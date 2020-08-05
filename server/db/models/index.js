@@ -1,6 +1,6 @@
 const User = require('./user')
 const Product = require('./product')
-
+const Address = require('./address')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -16,8 +16,11 @@ const Product = require('./product')
  */
 Product.belongsTo(User)
 User.hasMany(Product)
+User.hasOne(Address)
+Address.belongsTo(User)
 
 module.exports = {
   User,
-  Product
+  Product,
+  Address
 }
