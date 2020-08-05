@@ -2,6 +2,7 @@ const db = require('../server/db')
 let faker = require('faker')
 const {green, red} = require('chalk')
 const {User, Product} = require('../server/db/models')
+const Address = require('../server/db/models/address')
 
 function randomFloat(min, max) {
   return Math.round(min + (max - min) * Math.random() * 100) / 100
@@ -39,6 +40,23 @@ const getRandomProducts = num => {
   return products
 }
 
+const getRandomAddress = number => {
+  let addresses = []
+  for (let i = 0; i < number; i++) {
+    let randomAddress = {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      streetAddress: faker.address.streetAddress(),
+      city: faker.address.city(),
+      state: faker.address.state(),
+      country: faker.address.country(),
+      zipcode: parseInt(faker.address.zipCode())
+    }
+    addresses.push(randomAddress)
+  }
+  return addresses
+}
+
 const seed = async () => {
   try {
     await db.sync({force: true})
@@ -46,13 +64,21 @@ const seed = async () => {
       getRandomUsers(100).map(user => {
         return User.create(user)
       })
-    ).then(() =>
-      Promise.all(
-        getRandomProducts(100).map(product => {
-          return Product.create(product)
-        })
-      )
     )
+      .then(() =>
+        Promise.all(
+          getRandomProducts(100).map(product => {
+            return Product.create(product)
+          })
+        )
+      )
+      .then(() =>
+        Promise.all(
+          getRandomAddress(100).map(address => {
+            return Address.create(address)
+          })
+        )
+      )
   } catch (err) {
     console.log(red(err))
   }
