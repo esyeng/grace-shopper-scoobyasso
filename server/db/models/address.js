@@ -30,6 +30,13 @@ const Address = db.define('address', {
       notEmpty: true
     }
   },
+  state: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
   country: {
     type: Sequelize.STRING,
     allowNull: false,

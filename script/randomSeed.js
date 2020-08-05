@@ -47,8 +47,8 @@ const getRandomAddress = number => {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       streetAddress: faker.address.streetAddress(),
-
       city: faker.address.city(),
+      state: faker.address.state(),
       country: faker.address.country(),
       zipcode: parseInt(faker.address.zipCode())
     }

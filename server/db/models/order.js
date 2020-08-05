@@ -10,9 +10,6 @@ const Order = db.define('order', {
   },
   isComplete: {
     type: Sequelize.BOOLEAN
-  },
-  toBeCompleted: {
-    type: Sequelize.BOOLEAN
   }
 })
 

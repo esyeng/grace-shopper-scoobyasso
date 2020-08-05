@@ -24,6 +24,7 @@ describe('Address model', () => {
           lastName: 'Ross',
           streetAddress: '75 Happy Accident Blvd',
           city: 'Paradise Villa',
+          state: 'CA',
           country: 'United States',
           zipcode: 11111
         })
@@ -36,6 +37,7 @@ describe('Address model', () => {
       expect(randomPlace.lastName).to.be.equal('Ross')
       expect(randomPlace.streetAddress).to.equal('75 Happy Accident Blvd')
       expect(randomPlace.city).to.be.equal('Paradise Villa')
+      expect(randomPlace.state).to.be.equal('CA')
       expect(randomPlace.country).to.be.equal('United States')
       expect(randomPlace.zipcode).to.be.equal(11111)
     })
@@ -52,6 +54,7 @@ describe('seed file', () => {
           streetAddress: faker.address.streetAddress(),
 
           city: faker.address.city(),
+          state: faker.address.state(),
           country: faker.address.country(),
           zipcode: parseInt(faker.address.zipCode())
         }

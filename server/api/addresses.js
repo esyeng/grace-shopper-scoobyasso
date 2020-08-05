@@ -22,9 +22,26 @@ router.get('/:addressId', async (req, res, next) => {
   }
 })
 
-// router.post("/", async (req, res, next) => {
-//   try {
-//   } catch (err) {
-
-//   }
-// })
+router.post('/', async (req, res, next) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      streetAddress,
+      city,
+      country,
+      zipcode
+    } = req.body
+    const newAddress = await Address.create({
+      firstName,
+      lastName,
+      streetAddress,
+      city,
+      country,
+      zipcode
+    })
+    res.json(newAddress)
+  } catch (err) {
+    next(err)
+  }
+})
