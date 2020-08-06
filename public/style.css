@@ -120,5 +120,5 @@ form div {
 
 .linksNavbar {
   display: flex;
-  justify-content: s;
+  justify-content: space-between;
 }
