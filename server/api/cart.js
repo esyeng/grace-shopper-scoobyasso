@@ -21,7 +21,10 @@ router.get('/:userId', async (req, res, next) => {
       where: {
         userId: req.params.userId
       },
-      include: [OrderList]
+      include: {
+        model: OrderList,
+        include: Product
+      }
     })
     if (!cart) res.status(404).json('NOT FOUND')
     res.json(cart)

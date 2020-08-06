@@ -35,6 +35,7 @@ Order.hasMany(OrderList)
 OrderList.belongsTo(Order)
 
 Product.hasMany(OrderList)
+OrderList.belongsTo(Product)
 
 Product.belongsTo(ArtCategory)
 
