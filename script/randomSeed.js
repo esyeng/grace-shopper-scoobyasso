@@ -1,7 +1,14 @@
 const db = require('../server/db')
 let faker = require('faker')
 const {green, red} = require('chalk')
-const {User, Product, Address, ArtCategory} = require('../server/db/models')
+const {
+  User,
+  Product,
+  Address,
+  ArtCategory,
+  Order,
+  OrderList
+} = require('../server/db/models')
 // const Address = require('../server/db/models/address')
 
 // function randomFloat(min, max) {
@@ -96,6 +103,20 @@ const seed = async () => {
             return Address.create(address)
           })
         )
+      )
+      .then(() =>
+        Promise.all([Order.create({userId: 1}), Order.create({userId: 2})])
+      )
+      .then(() =>
+        Promise.all([
+          OrderList.create({
+            quantity: 1,
+            unitPrice: 10,
+            totalPrice: 10,
+            orderId: 1,
+            productId: 1
+          })
+        ])
       )
   } catch (err) {
     console.log(red(err))

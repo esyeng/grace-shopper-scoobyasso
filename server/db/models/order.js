@@ -10,6 +10,10 @@ const Order = db.define('order', {
   },
   isComplete: {
     type: Sequelize.BOOLEAN
+  },
+  isCart: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
   }
 })
 
