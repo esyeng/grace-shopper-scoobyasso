@@ -1,12 +1,12 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-const isAdminMiddleware = require('..auth/isAdmin')
+const isAdminMiddleware = require('../auth/isAdmin')
 module.exports = router
 
 router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
     if (req.user) {
-      if (!req.user.isAdmin) {
+      if (isAdminMiddleware(req)) {
         res.send('No access')
       } else {
         const users = await User.findAll({
@@ -47,12 +47,12 @@ router.post('/', async (req, res, next) => {
   try {
     const {firstName, lastName, email} = req.body
     const newUser = await User.create({
-      ...firstName,
-      ...lastName,
-      ...email
+      firstName,
+      lastName,
+      email
     })
-    res.status(204).json(newUser)
+    res.json(newUser)
   } catch (err) {
-    next(err)
+    console.log('sign up failed')
   }
 })
