@@ -42,6 +42,8 @@ export const auth = (
   let res
   try {
     res = await axios.post(`/auth/${method}`, {
+      //Change to args so that firstName and lastName
+      //are not required
       firstName,
       lastName,
       email,
