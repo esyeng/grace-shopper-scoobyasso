@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const isAdminMiddleware = require('./isAdmin')
 module.exports = router
 
-router.post('/login', async (req, res, next) => {
+router.post('/login', isAdminMiddleware, async (req, res, next) => {
   try {
     const user = await User.findOne({where: {email: req.body.email}})
     if (!user) {

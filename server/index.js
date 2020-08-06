@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const session = require('express-session')
 const passport = require('passport')
+const helmet = require('helmet')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
@@ -43,6 +44,7 @@ passport.deserializeUser(async (id, done) => {
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
+  app.use(helmet()) //helmet for admin authentication
 
   // body parsing middleware
   app.use(express.json())
