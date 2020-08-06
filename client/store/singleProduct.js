@@ -24,9 +24,7 @@ export const updateSingleProduct = product => ({
 export const fetchSingleProduct = id => {
   return async dispatch => {
     try {
-      console.log('running THUNK @@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-      const {data: productFetched} = await axios.get(`/api/products/1`)
-      console.log(productFetched)
+      const {data: productFetched} = await axios.get(`/api/products/${id}`)
       dispatch(setSingleProduct(productFetched))
     } catch (error) {
       console.error(error)
@@ -44,9 +42,8 @@ export const fetchSingleProduct = id => {
 // }
 
 export default function productReducer(state = initialState, action) {
-  switch (action.types) {
+  switch (action.type) {
     case SET_SINGLE_PRODUCT:
-      console.log('INSIDE REDUCER@@@@@@@', action.product)
       return action.product
     case UPDATE_PRODUCT:
       return {

@@ -1,12 +1,12 @@
 const db = require('../server/db')
 let faker = require('faker')
 const {green, red} = require('chalk')
-const {User, Product} = require('../server/db/models')
-const Address = require('../server/db/models/address')
+const {User, Product, Address, ArtCategory} = require('../server/db/models')
+// const Address = require('../server/db/models/address')
 
-function randomFloat(min, max) {
-  return Math.round(min + (max - min) * Math.random() * 100) / 100
-}
+// function randomFloat(min, max) {
+//   return Math.round(min + (max - min) * Math.random() * 100) / 100
+// }
 function randomNum(min, max) {
   return Math.floor(min + (max - min) * Math.random())
 }
@@ -25,15 +25,26 @@ const getRandomUsers = num => {
   return users
 }
 
+const createArtCategories = num => {
+  let categories = [
+    {name: 'Some Art'},
+    {name: 'Sculpture'},
+    {name: 'Painting'},
+    {name: 'Pottery'}
+  ]
+  return categories
+}
+
 const getRandomProducts = num => {
   let products = []
   for (let i = 0; i < num; i++) {
+    let randomIdNumber = i % 4 + 1 //for artcategory
     let randomProduct = {
       name: faker.commerce.productName(),
       description: faker.lorem.sentences(),
       imageUrl: faker.random.image(),
       price: randomNum(1, 2000),
-      category: faker.commerce.product()
+      artCategoryId: randomIdNumber
     }
     products.push(randomProduct)
   }
@@ -65,6 +76,13 @@ const seed = async () => {
         return User.create(user)
       })
     )
+      .then(() =>
+        Promise.all(
+          createArtCategories().map(category => {
+            return ArtCategory.create(category)
+          })
+        )
+      )
       .then(() =>
         Promise.all(
           getRandomProducts(100).map(product => {
