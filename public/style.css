@@ -8,11 +8,13 @@ body {
     #b1d9e7
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
-    to right,
+    to top,
     #60b2ce,
-    #b1d9e7,
+    orange,
     #60b2ce
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -108,12 +110,15 @@ form div {
 .usefulLinks {
   background-color: white;
   color: blue;
-  width: 100%;
   border: 3px solid blue;
-  padding: 5px;
 }
 
 .smallText {
   font-weight: bold;
   text-decoration: underline;
+}
+
+.linksNavbar {
+  display: flex;
+  justify-content: s;
 }

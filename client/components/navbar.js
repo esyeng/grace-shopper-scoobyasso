@@ -6,34 +6,38 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1 className="siteHeader">SCOOBYASSO</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link className="linkLogin" to="/">
-            Home
-          </Link>
-          <Link className="linkLogin" to="/login">
-            Login
-          </Link>
-          <Link className="linkLogin" to="/signup">
-            Sign Up
-          </Link>
-          <Link className="linkLogin" to="/cart">
-            Cart
-          </Link>
-        </div>
-      )}
-    </nav>
+    <div>
+      <h1 className="siteHeader">SCOOBYASSO</h1>
+      <nav>
+        {isLoggedIn ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+            <Link to="/home">Home</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div className="linksNavbar">
+            <div>
+              {/* The navbar will show these links before you log in */}
+              <Link className="linkLogin" to="/">
+                Home
+              </Link>
+              <Link className="linkLogin" to="/login">
+                Login
+              </Link>
+              <Link className="linkLogin" to="/signup">
+                Sign Up
+              </Link>
+            </div>
+            <Link className="linkLogin" to="/cart">
+              Cart
+            </Link>
+          </div>
+        )}
+      </nav>
+    </div>
     <div className="usefulLinks">Useful Links</div>
     {/* <hr /> */}
   </div>
