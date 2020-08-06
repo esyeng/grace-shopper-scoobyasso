@@ -4,10 +4,13 @@ const db = require('../db')
 const OrderList = db.define('orderList', {
   quantity: {
     type: Sequelize.INTEGER
+  },
+  unitPrice: {
+    type: Sequelize.INTEGER
+  },
+  totalPrice: {
+    type: Sequelize.INTEGER
   }
-  // unitPrice: {
-  //   // etc
-  // }
 })
 
 module.exports = OrderList

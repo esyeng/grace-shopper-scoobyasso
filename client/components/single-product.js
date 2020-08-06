@@ -4,13 +4,19 @@ import {fetchSingleProduct} from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
-    this.props.fetchSingleProduct(1)
+    this.props.fetchSingleProduct(this.props.match.params.productId)
   }
   render() {
     const {singleProduct} = this.props
     return (
       <div className="singleProductContainer">
-        {/* <img className="productImage" src={singleProduct.imageUrl} /> */}
+        <h1>{singleProduct.name}</h1>
+        <h2>${singleProduct.price}</h2>
+        <div className="singleProductStock">
+          In Stock: {singleProduct.inventory}
+        </div>
+        <div className="singleProductDesc">{singleProduct.description}</div>
+        <img className="productImage" src={singleProduct.imageUrl} />
       </div>
     )
   }
@@ -18,12 +24,12 @@ class SingleProduct extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    singleProduct: state.product
+    singleProduct: state.singleProduct
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSingleProduct: () => dispatch(fetchSingleProduct())
+    fetchSingleProduct: id => dispatch(fetchSingleProduct(id))
   }
 }
 

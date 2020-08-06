@@ -28,9 +28,13 @@ const Product = db.define('product', {
       max: Infinity
     }
   },
-  category: {
-    type: Sequelize.STRING,
-    defaultValue: 'someArt'
+  inventory: {
+    type: Sequelize.INTEGER,
+    validate: {
+      min: 0,
+      max: Infinity
+    },
+    defaultValue: 5
   }
 })
 
