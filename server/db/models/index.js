@@ -31,8 +31,10 @@ User.hasMany(Order)
 Order.belongsTo(User) // Order belongs to user (userId)
 
 // PRODUCTS -->
-Product.belongsToMany(Order, {through: 'orderList'})
-// Order.hasMany(Order)
+Order.hasMany(OrderList)
+OrderList.belongsTo(Order)
+
+Product.hasMany(OrderList)
 
 Product.belongsTo(ArtCategory)
 

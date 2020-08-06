@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, OrderList} = require('../db/models')
+const {Order, OrderList, Product} = require('../db/models')
 module.exports = router
 
 // GET /Cart >>> guest cart
@@ -20,7 +20,8 @@ router.get('/:userId', async (req, res, next) => {
     const cart = await Order.findOne({
       where: {
         userId: req.params.userId
-      }
+      },
+      include: [OrderList]
     })
     if (!cart) res.status(404).json('NOT FOUND')
     res.json(cart)
