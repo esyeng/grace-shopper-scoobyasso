@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const initialState = []
+const initialState = {orderLists: []}
+// const initialState = {}
 //action type
 const SET_CART = 'SET_CART'
 
@@ -13,10 +14,10 @@ const setCart = cart => {
 }
 
 //thunk
-const fetchCart = userId => {
+export const fetchCart = userId => {
   return async dispatch => {
     try {
-      const cartFetched = await axios.get(`/api/cart/${userId}`)
+      const {data: cartFetched} = await axios.get(`/api/cart/${userId}`)
       dispatch(setCart(cartFetched))
     } catch (err) {
       console.error(err)

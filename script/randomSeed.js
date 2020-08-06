@@ -115,6 +115,13 @@ const seed = async () => {
             totalPrice: 10,
             orderId: 1,
             productId: 1
+          }),
+          OrderList.create({
+            quantity: 5,
+            unitPrice: 20,
+            totalPrice: 10,
+            orderId: 1,
+            productId: 10
           })
         ])
       )
