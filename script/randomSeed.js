@@ -1,7 +1,14 @@
 const db = require('../server/db')
 let faker = require('faker')
 const {green, red} = require('chalk')
-const {User, Product, Address, ArtCategory} = require('../server/db/models')
+const {
+  User,
+  Product,
+  Address,
+  ArtCategory,
+  Order,
+  OrderList
+} = require('../server/db/models')
 // const Address = require('../server/db/models/address')
 
 // function randomFloat(min, max) {
@@ -68,11 +75,39 @@ const getRandomAddress = number => {
   return addresses
 }
 
+const createRandomOrders = number => {
+  let orders = []
+  for (let i = 1; i <= number; i++) {
+    let randomOrder = {
+      userId: i
+    }
+    orders.push(randomOrder)
+  }
+  return orders
+}
+
+const createRandomOrderItems = number => {
+  let orderItems = []
+  for (let i = 1; i <= number; i++) {
+    let randomOrderItem = {
+      orderId: i,
+      productId: i
+    }
+    let randomOrderItem2 = {
+      orderId: i,
+      productId: i + 1
+    }
+    orderItems.push(randomOrderItem)
+    orderItems.push(randomOrderItem2)
+  }
+  return orderItems
+}
+
 const seed = async () => {
   try {
     await db.sync({force: true})
     await Promise.all(
-      getRandomUsers(100).map(user => {
+      getRandomUsers(20).map(user => {
         return User.create(user)
       })
     )
@@ -85,15 +120,29 @@ const seed = async () => {
       )
       .then(() =>
         Promise.all(
-          getRandomProducts(100).map(product => {
+          getRandomProducts(30).map(product => {
             return Product.create(product)
           })
         )
       )
       .then(() =>
         Promise.all(
-          getRandomAddress(100).map(address => {
+          getRandomAddress(20).map(address => {
             return Address.create(address)
+          })
+        )
+      )
+      .then(() =>
+        Promise.all(
+          createRandomOrders(20).map(order => {
+            return Order.create(order)
+          })
+        )
+      )
+      .then(() =>
+        Promise.all(
+          createRandomOrderItems(20).map(orderItem => {
+            return OrderList.create(orderItem)
           })
         )
       )
