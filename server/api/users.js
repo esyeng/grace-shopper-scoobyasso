@@ -2,21 +2,21 @@ const router = require('express').Router()
 const {User} = require('../db/models')
 const isAdmin = require('../auth/isAdmin')
 const isUser = require('../auth/isUser')
+const {session} = require('passport')
 module.exports = router
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
+    const users = await User.findAll({
+      attributes: ['id', 'email']
+    })
     if (req.user) {
-      if (isAdmin(req)) {
-        res.send('No access')
+      if (!isAdmin(req)) {
+        res.send('Access denied.')
       } else {
-        const users = await User.findAll({
-          attributes: ['id', 'email']
-        })
         res.json(users)
       }
     }
-    next()
   } catch (err) {
     next(err)
   }
@@ -24,13 +24,13 @@ router.get('/', isAdmin, async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    const thisUser = await User.findByOne({
-      where: {
-        id: req.params.userId
-      },
-      attributes: [firstName, lastName, email]
-    })
-    res.json(thisUser)
+    console.log(req)
+    const thisUser = await User.findById(req.session.passport.user)
+    if (thisUser) {
+      console.log(req.session)
+      console.log(req.user)
+      res.json(thisUser)
+    }
   } catch (err) {
     next(err)
   }
@@ -43,20 +43,6 @@ router.get('/:userId', async (req, res, next) => {
  * -- Delete route
  * -- Update route (put)
  */
-
-router.post('/', async (req, res, next) => {
-  try {
-    const {firstName, lastName, email} = req.body
-    const newUser = await User.create({
-      firstName,
-      lastName,
-      email
-    })
-    res.json(newUser)
-  } catch (err) {
-    console.log('sign up failed')
-  }
-})
 
 // PUT /users/id >>> update user info
 router.put('/:userId', isUser, async (req, res, next) => {

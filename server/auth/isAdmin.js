@@ -1,14 +1,15 @@
 const express = require('express')
 const passport = require('passport')
 
-const isAdmin = (req, res, next) => {
+const isAdminMiddleware = (req, res, next) => {
   const currentUser = req.user
-  if (currentUser && currentUser.isAdmin) {
-    return next()
+  console.log(currentUser)
+  if (currentUser && !currentUser.isAdmin) {
+    next()
   } else {
-    const error = new Error('Access denied.')
+    const error = new Error('Denied.')
     error.status = 401
     next(error)
   }
 }
-module.exports = isAdmin
+module.exports = isAdminMiddleware
