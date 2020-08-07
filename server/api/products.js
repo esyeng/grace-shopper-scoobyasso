@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
+const {isUser} = require('../auth/isUser')
 module.exports = router
 
 // GET /products >>> all products
