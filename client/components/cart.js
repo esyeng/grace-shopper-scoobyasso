@@ -1,26 +1,49 @@
 import React, {Component} from 'react'
-import {fetchCart} from '../store/cart'
+import {fetchCart, modifyCart} from '../store/cart'
 import {connect} from 'react-redux'
 
-export class Cart extends Component {
-  componentDidMount() {
-    this.props.getCart(1)
-  }
+class Cart extends Component {
   render() {
-    console.log(this.props)
+    let cartTotal = 0
+    const {modifyCart} = this.props
     return (
       <div>
-        {this.props.cart.orderLists.map(item => {
+        {this.props.cart.map((item, idx) => {
+          cartTotal += item.quantity * item.price
           return (
             <div key={item.id}>
-              <h3>{item.product.name}</h3>
-              <h5>Unit Price{item.product.price}</h5>
-              <h5>Quantity{item.quantity}</h5>
+              <h3>{item.name}</h3>
+              <img src={item.imageUrl} />
+              <h5>Unit Price - ${item.price / 100}</h5>
+              <h5>Quantity - {item.quantity}</h5>
+              <button
+                onClick={() => {
+                  modifyCart(idx, 'plus')
+                }}
+              >
+                +
+              </button>
+              <button
+                onClick={() => {
+                  if (item.quantity > 1) {
+                    modifyCart(idx, 'minus')
+                  }
+                }}
+              >
+                -
+              </button>
+              <button
+                onClick={() => {
+                  modifyCart(idx, 'remove')
+                }}
+              >
+                Remove Item From Cart
+              </button>
             </div>
           )
         })}
-        <h5>${this.props.cart.orderTotal}</h5>
-        <h1>HELLO FROM CART</h1>
+        <h5>Cart Total: ${cartTotal / 100}</h5>
+        <button>Checkout</button>
       </div>
     )
   }
@@ -34,7 +57,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCart: id => dispatch(fetchCart(id))
+    getCart: id => dispatch(fetchCart(id)),
+    modifyCart: (idx, operation) => dispatch(modifyCart(idx, operation))
   }
 }
 
