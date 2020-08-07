@@ -75,11 +75,39 @@ const getRandomAddress = number => {
   return addresses
 }
 
+const createRandomOrders = number => {
+  let orders = []
+  for (let i = 1; i <= number; i++) {
+    let randomOrder = {
+      userId: i
+    }
+    orders.push(randomOrder)
+  }
+  return orders
+}
+
+const createRandomOrderItems = number => {
+  let orderItems = []
+  for (let i = 1; i <= number; i++) {
+    let randomOrderItem = {
+      orderId: i,
+      productId: i
+    }
+    let randomOrderItem2 = {
+      orderId: i,
+      productId: i + 1
+    }
+    orderItems.push(randomOrderItem)
+    orderItems.push(randomOrderItem2)
+  }
+  return orderItems
+}
+
 const seed = async () => {
   try {
     await db.sync({force: true})
     await Promise.all(
-      getRandomUsers(100).map(user => {
+      getRandomUsers(20).map(user => {
         return User.create(user)
       })
     )
@@ -92,38 +120,31 @@ const seed = async () => {
       )
       .then(() =>
         Promise.all(
-          getRandomProducts(100).map(product => {
+          getRandomProducts(30).map(product => {
             return Product.create(product)
           })
         )
       )
       .then(() =>
         Promise.all(
-          getRandomAddress(100).map(address => {
+          getRandomAddress(20).map(address => {
             return Address.create(address)
           })
         )
       )
       .then(() =>
-        Promise.all([Order.create({userId: 1}), Order.create({userId: 2})])
+        Promise.all(
+          createRandomOrders(20).map(order => {
+            return Order.create(order)
+          })
+        )
       )
       .then(() =>
-        Promise.all([
-          OrderList.create({
-            quantity: 1,
-            unitPrice: 10,
-            totalPrice: 10,
-            orderId: 1,
-            productId: 1
-          }),
-          OrderList.create({
-            quantity: 5,
-            unitPrice: 20,
-            totalPrice: 10,
-            orderId: 1,
-            productId: 10
+        Promise.all(
+          createRandomOrderItems(20).map(orderItem => {
+            return OrderList.create(orderItem)
           })
-        ])
+        )
       )
   } catch (err) {
     console.log(red(err))

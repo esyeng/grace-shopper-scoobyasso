@@ -19,7 +19,7 @@ class AllProducts extends React.Component {
                 </Link>
               </div>
               <img className="productImage" src={product.imageUrl} />
-              <div className="productPrice">${product.price}</div>
+              <div className="productPrice">${product.price / 100}</div>
             </div>
           )
         })}

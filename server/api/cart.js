@@ -15,6 +15,16 @@ module.exports = router
 
 // GET /Carts >>> user cart
 
+router.post('/addToCart', async (req, res, next) => {
+  try {
+    console.log(req.body)
+
+    res.send()
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/:userId', async (req, res, next) => {
   try {
     const cart = await Order.findOne({
