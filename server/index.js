@@ -44,7 +44,7 @@ passport.deserializeUser(async (id, done) => {
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
-  app.use(helmet()) //helmet for admin authentication
+  // app.use(helmet()) //helmet for admin authentication
 
   // body parsing middleware
   app.use(express.json())

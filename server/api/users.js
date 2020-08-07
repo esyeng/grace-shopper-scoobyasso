@@ -52,7 +52,6 @@ router.post('/', async (req, res, next) => {
       lastName,
       email
     })
-    console.log(newUser)
     res.json(newUser)
   } catch (err) {
     console.log('sign up failed')
