@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-const isAdminMiddleware = require('../auth/isAdmin')
+const isAdmin = require('../auth/isAdmin')
+const isUser = require('../auth/isUser')
 module.exports = router
 
-router.get('/', isAdminMiddleware, async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     if (req.user) {
-      if (isAdminMiddleware(req)) {
+      if (isAdmin(req)) {
         res.send('No access')
       } else {
         const users = await User.findAll({
@@ -55,5 +56,37 @@ router.post('/', async (req, res, next) => {
     res.json(newUser)
   } catch (err) {
     console.log('sign up failed')
+  }
+})
+
+// PUT /users/id >>> update user info
+router.put('/:userId', isUser, async (req, res, next) => {
+  try {
+    if (isUser(req.user)) {
+      const user = await User.findByPk(req.params.userId)
+      await user.update({
+        where: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email
+        }
+      })
+      res.status(204).json(user)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+// DELETE /users/id >>> delete user from db
+router.delete('/:userId', isUser, async (req, res, next) => {
+  try {
+    if (isUser(req.user)) {
+      const user = await User.findByPk(req.params.userId)
+      await User.destroy(user)
+      res.send('Account successfully erased')
+    }
+  } catch (err) {
+    next(err)
   }
 })
