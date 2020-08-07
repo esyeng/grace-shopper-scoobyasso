@@ -1,21 +1,33 @@
 const router = require('express').Router()
 const {Order, OrderList, Product} = require('../db/models')
+
 const User = require('../db/models/user')
 const isUser = require('../auth/isUser')
+
 module.exports = router
 
 // GET /Cart >>> guest cart
 
-router.get('/:sessionId', async (req, res, next) => {
-  try {
-    const cart = await Cart.findByPk(req.params.sessionId)
-    res.json(cart)
-  } catch (err) {
-    next(err)
-  }
-})
+// router.get('/:sessionId', async (req, res, next) => {
+//   try {
+//     const cart = await Cart.findByPk(req.params.sessionId)
+//     res.json(cart)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 // GET /Carts >>> user cart
+
+router.post('/addToCart', async (req, res, next) => {
+  try {
+    console.log(req.body)
+
+    res.send()
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get('/:userId', async (req, res, next) => {
   try {

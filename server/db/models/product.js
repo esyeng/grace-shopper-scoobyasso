@@ -34,7 +34,7 @@ const Product = db.define('product', {
       min: 0,
       max: Infinity
     },
-    defaultValue: 5
+    defaultValue: 1
   }
 })
 
