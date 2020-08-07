@@ -21,3 +21,37 @@ router.get('/:productId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/:userId', isUser, async (req, res, next) => {
+  try {
+    if (isUser(req.user)) {
+      const cart = await Order.findOrCreate({
+        where: {
+          userId: req.params.userId
+        },
+        include: {
+          model: OrderList,
+          include: Product
+        }
+      })
+      if (!cart) res.status(404).json('NOT FOUND')
+      res.json(cart)
+    } else next()
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:productId', isUser, async (req, res, next) => {
+  try {
+    if (isUser(req.user)) {
+      const order = await OrderList.findOne(req.params.productId)
+      if (order.productId === req.params.productId) {
+        this.productId = null
+      }
+      res.json(order)
+    }
+  } catch (err) {
+    next(err)
+  }
+})

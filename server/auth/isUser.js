@@ -1,14 +1,14 @@
 const express = require('express')
 const passport = require('passport')
 
-const isAdmin = (req, res, next) => {
+const isUser = (req, res, next) => {
   const currentUser = req.user
-  if (currentUser && currentUser.isAdmin) {
+  if (currentUser && !currentUser.isAdmin) {
     return next()
   } else {
-    const error = new Error('Access denied.')
+    const error = new Error('No account found, sign up today!')
     error.status = 401
     next(error)
   }
 }
-module.exports = isAdmin
+module.exports = isUser
