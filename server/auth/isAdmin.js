@@ -4,7 +4,7 @@ const passport = require('passport')
 const isAdmin = (req, res, next) => {
   const currentUser = req.user
   if (currentUser && currentUser.isAdmin) {
-    return next()
+    return true
   } else {
     const error = new Error('Access denied.')
     error.status = 401
