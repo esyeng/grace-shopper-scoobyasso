@@ -2,13 +2,14 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct} from '../store/singleProduct'
 import {addToCart} from '../store/cart'
+import cart from './cart'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
     this.props.fetchSingleProduct(this.props.match.params.productId)
   }
   render() {
-    const {singleProduct, addToCart} = this.props
+    const {singleProduct, addToCart, cart, history} = this.props
     return (
       <div className="singleProductContainer">
         <h1>{singleProduct.name}</h1>
@@ -20,7 +21,18 @@ class SingleProduct extends React.Component {
         <img className="productImage" src={singleProduct.imageUrl} />
         <button
           onClick={() => {
-            addToCart(singleProduct)
+            let existsInCart = false
+            cart.map(cartItem => {
+              if (cartItem.id === singleProduct.id) {
+                cartItem.quantity += 1
+                existsInCart = true
+              }
+              return cartItem
+            })
+            if (!existsInCart) {
+              addToCart(singleProduct)
+            }
+            history.push('/cart')
           }}
         >
           Add To Cart
@@ -32,6 +44,7 @@ class SingleProduct extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    cart: state.cart,
     singleProduct: state.singleProduct
   }
 }
