@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const session = require('express-session')
 const passport = require('passport')
-const helmet = require('helmet')
+// const helmet = require('helmet')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
@@ -59,7 +59,8 @@ const createApp = () => {
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: false
+      saveUninitialized: true,
+      cookie: {secure: true}
     })
   )
   app.use((req, res, next) => {
