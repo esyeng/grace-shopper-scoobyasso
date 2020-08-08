@@ -19,24 +19,51 @@ module.exports = router
  *
  */
 
+router.get('/guest', async (req, res, next) => {
+  try {
+    if (!req.session.cart) {
+      req.session.cart = []
+    }
+    res.json(req.session.cart)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/guest', async (req, res, next) => {
+  try {
+    let addItem = req.body
+    let existed = false
+    req.session.cart.map(item => {
+      if (item.id === addItem.id) {
+        item.quantity += 1
+        existed = true
+      }
+      return item
+    })
+    if (!existed) {
+      req.session.cart.push(addItem)
+    }
+    res.json(req.session.cart)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // GET /api/cart/userId >>> guest/user cart
 router.get('/:userId', isUser, async (req, res, next) => {
   try {
-    if (req.user) {
-      const cart = await Order.findOne({
-        where: {
-          userId: req.params.userId
-        },
-        include: {
-          model: OrderList,
-          include: Product
-        }
-      })
-      res.json(cart)
-    } else if (req.sessionID) {
-      const cart = await Order.findByPk(req.sessionID)
-      res.json(cart)
-    }
+    const dbCart = await Order.findOne({
+      where: {
+        userId: req.params.userId
+      },
+      include: {
+        model: OrderList
+      }
+    })
+    let userCart = req.session.cart
+
+    res.json(userCart)
   } catch (err) {
     next(err)
   }
@@ -46,29 +73,16 @@ router.get('/:userId', isUser, async (req, res, next) => {
 
 router.put('/:userId', isUser, async (req, res, next) => {
   try {
-    let cart = await Order.findOrCreate({
+    let cart = await Order.findOne({
       where: {
         userId: req.params.userId
       },
       include: {
-        model: OrderList,
-        include: Product
+        model: OrderList
       }
     })
-    cart = await cart.update({
-      include: {
-        model: Order,
-        where: {
-          orderTotal: req.body.orderTotal
-        },
-        include: {
-          model: OrderList,
-          where: {
-            quantity: req.body.quantity
-          }
-        }
-      }
-    })
+
+    cart = await cart.update()
     if (!cart || req.params.userId !== cart.userId) {
       res.status(404).json('NOT FOUND')
     } else res.json(cart)
