@@ -63,9 +63,8 @@ const createApp = () => {
       cookie: {secure: true}
     })
   )
-
   app.use((req, res, next) => {
-    console.log('SESSION: ', req)
+    console.log('SESSION: ', req.session)
     next()
   })
 

@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const {Address} = require('../db/models')
+const {isAdmin, isVendor, isUser} = require('../auth')
 module.exports = router
 
 // GET /products >>> all products
-router.get('/', async (req, res, next) => {
+router.get('/', isAdmin, async (req, res, next) => {
   try {
     const addresses = await Address.findAll()
     res.json(addresses)
@@ -13,7 +14,7 @@ router.get('/', async (req, res, next) => {
 })
 
 // GET /addresses >>> one by id
-router.get('/:addressId', async (req, res, next) => {
+router.get('/:addressId', isUser, async (req, res, next) => {
   try {
     const address = await Address.findByPk(req.params.addressId)
     res.json(address)
@@ -22,7 +23,7 @@ router.get('/:addressId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isUser, async (req, res, next) => {
   try {
     const {
       firstName,

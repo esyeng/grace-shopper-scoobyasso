@@ -2,35 +2,42 @@ const router = require('express').Router()
 const {User} = require('../db/models')
 const isAdmin = require('../auth/isAdmin')
 const isUser = require('../auth/isUser')
+const {session} = require('passport')
 module.exports = router
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
+    const users = await User.findAll({
+      attributes: ['id', 'email']
+    })
     if (req.user) {
-      if (isAdmin(req)) {
-        res.send('No access')
+      if (!isAdmin(req)) {
+        res.send('Access denied.')
       } else {
-        const users = await User.findAll({
-          attributes: ['id', 'email']
-        })
         res.json(users)
       }
     }
-    next()
   } catch (err) {
     next(err)
   }
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isUser, async (req, res, next) => {
   try {
-    const thisUser = await User.findByOne({
-      where: {
-        id: req.params.userId
-      },
-      attributes: [firstName, lastName, email]
-    })
-    res.json(thisUser)
+    const thisUser = await User.findByPk(req.params.userId)
+    const {firstName, lastName, email, id} = thisUser
+    if (req.params.userId === thisUser.id || isAdmin(req.user)) {
+      res.json({
+        firstName: firstName,
+        lastName: lastName,
+        email: email
+      })
+    } else {
+      res.json({
+        email: email,
+        id: id
+      })
+    }
   } catch (err) {
     next(err)
   }
@@ -44,25 +51,10 @@ router.get('/:userId', async (req, res, next) => {
  * -- Update route (put)
  */
 
-router.post('/', async (req, res, next) => {
-  try {
-    const {firstName, lastName, email} = req.body
-    const newUser = await User.create({
-      firstName,
-      lastName,
-      email
-    })
-    console.log(newUser)
-    res.json(newUser)
-  } catch (err) {
-    console.log('sign up failed')
-  }
-})
-
 // PUT /users/id >>> update user info
 router.put('/:userId', isUser, async (req, res, next) => {
   try {
-    if (isUser(req.user)) {
+    if (req.params.userId === thisUser.id || isAdmin(req.user)) {
       const user = await User.findByPk(req.params.userId)
       await user.update({
         where: {
@@ -81,7 +73,7 @@ router.put('/:userId', isUser, async (req, res, next) => {
 // DELETE /users/id >>> delete user from db
 router.delete('/:userId', isUser, async (req, res, next) => {
   try {
-    if (isUser(req.user)) {
+    if (req.params.userId === thisUser.id || isAdmin(req.user)) {
       const user = await User.findByPk(req.params.userId)
       await User.destroy(user)
       res.send('Account successfully erased')
