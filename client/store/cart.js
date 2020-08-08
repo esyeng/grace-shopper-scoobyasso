@@ -18,7 +18,7 @@ const setCart = cart => {
 export const addToCart = product => {
   return {
     type: ADD_TO_CART,
-    product: {...product, quantity: 1}
+    product
   }
 }
 
@@ -34,10 +34,27 @@ export const modifyCart = (idx, operation) => {
 export const fetchCart = userId => {
   return async dispatch => {
     try {
-      const {data: cartFetched} = await axios.get(`/api/cart/${userId}`)
+      const {data: cartFetched} = await axios.get(
+        `/api/cart/${userId ? userId : 'guest'}`
+      )
+      console.log(cartFetched)
       dispatch(setCart(cartFetched))
     } catch (err) {
       console.error(err)
+    }
+  }
+}
+
+export const addToSessionCart = (product, userId) => {
+  return async dispatch => {
+    try {
+      const {data: modifiedCart} = await axios.put(
+        `/api/cart/${userId ? userId : 'guest'}`,
+        {...product, quantity: 1}
+      )
+      dispatch(setCart(modifiedCart))
+    } catch (error) {
+      console.error(error)
     }
   }
 }

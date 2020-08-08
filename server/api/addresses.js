@@ -2,10 +2,9 @@ const router = require('express').Router()
 const {Address} = require('../db/models')
 const isAdmin = require('../auth/isAdmin')
 const isUser = require('../auth/isUser')
-// const isVednor = require('./auth')
 module.exports = router
 
-// GET /products >>> all products
+//ADDRESSES
 router.get('/', isAdmin, async (req, res, next) => {
   try {
     const addresses = await Address.findAll()

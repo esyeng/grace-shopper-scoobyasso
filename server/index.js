@@ -59,12 +59,12 @@ const createApp = () => {
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: true,
-      cookie: {secure: true}
+      saveUninitialized: true
+      // cookie: {secure: true}
     })
   )
   app.use((req, res, next) => {
-    console.log('SESSION: ', req.session)
+    console.log('SESSION: ')
     next()
   })
 
