@@ -4,7 +4,7 @@ const passport = require('passport')
 const isAdminMiddleware = (req, res, next) => {
   const currentUser = req.user
   console.log(currentUser)
-  if (currentUser && !currentUser.isAdmin) {
+  if (currentUser && currentUser.isAdmin) {
     next()
   } else {
     const error = new Error('Denied.')

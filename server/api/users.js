@@ -22,15 +22,10 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isUser, async (req, res, next) => {
   try {
-    console.log(req)
-    const thisUser = await User.findById(req.session.passport.user)
-    if (thisUser) {
-      console.log(req.session)
-      console.log(req.user)
-      res.json(thisUser)
-    }
+    const thisUser = await User.findByPk(req.params.userId)
+    res.json(thisUser)
   } catch (err) {
     next(err)
   }
