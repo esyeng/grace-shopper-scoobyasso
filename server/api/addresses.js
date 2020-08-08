@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const {Address} = require('../db/models')
-const {isAdmin, isVendor, isUser} = require('../auth')
+const isAdmin = require('../auth/isAdmin')
+const isUser = require('../auth/isUser')
+// const isVednor = require('./auth')
 module.exports = router
 
 // GET /products >>> all products
