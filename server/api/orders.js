@@ -22,3 +22,27 @@ router.get('/:orderId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/:userId', async (req, res, next) => {
+  try {
+    //
+  } catch (err) {
+    //
+  }
+})
+
+router.put('/:orderId', async (req, res, next) => {
+  try {
+    //
+  } catch (err) {
+    //
+  }
+})
+
+router.delete('/:orderId', async (req, res, next) => {
+  try {
+    //
+  } catch (err) {
+    //
+  }
+})

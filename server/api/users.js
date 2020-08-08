@@ -25,7 +25,19 @@ router.get('/', isAdmin, async (req, res, next) => {
 router.get('/:userId', isUser, async (req, res, next) => {
   try {
     const thisUser = await User.findByPk(req.params.userId)
-    res.json(thisUser)
+    const {firstName, lastName, email, id} = thisUser
+    if (req.params.userId === thisUser.id || isAdmin(req.user)) {
+      res.json({
+        firstName: firstName,
+        lastName: lastName,
+        email: email
+      })
+    } else {
+      res.json({
+        email: email,
+        id: id
+      })
+    }
   } catch (err) {
     next(err)
   }
@@ -42,7 +54,7 @@ router.get('/:userId', isUser, async (req, res, next) => {
 // PUT /users/id >>> update user info
 router.put('/:userId', isUser, async (req, res, next) => {
   try {
-    if (isUser(req.user)) {
+    if (req.params.userId === thisUser.id || isAdmin(req.user)) {
       const user = await User.findByPk(req.params.userId)
       await user.update({
         where: {
@@ -61,7 +73,7 @@ router.put('/:userId', isUser, async (req, res, next) => {
 // DELETE /users/id >>> delete user from db
 router.delete('/:userId', isUser, async (req, res, next) => {
   try {
-    if (isUser(req.user)) {
+    if (req.params.userId === thisUser.id || isAdmin(req.user)) {
       const user = await User.findByPk(req.params.userId)
       await User.destroy(user)
       res.send('Account successfully erased')
