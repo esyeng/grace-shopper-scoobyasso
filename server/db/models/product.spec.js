@@ -20,15 +20,13 @@ describe('Product model', () => {
         description: 'You know what it is.',
         imageUrl:
           'https://imgc.artprintimages.com/img/print/starry-night-c-1889_u-l-f25nmn0.jpg?h=550&p=0&w=550&background=fbfbfb',
-        price: 1000,
-        category: 'Painting'
+        price: 1000
       })
     })
     it('contains valid fields for a name, description, price, category, and image', () => {
       expect(vanGogh.name).to.be.equal('Starry Night')
       expect(vanGogh.description).to.be.equal('You know what it is.')
       expect(vanGogh.price).to.equal(1000)
-      expect(vanGogh.category).to.be.equal('Painting')
       expect(vanGogh.imageUrl).to.be.equal(
         'https://imgc.artprintimages.com/img/print/starry-night-c-1889_u-l-f25nmn0.jpg?h=550&p=0&w=550&background=fbfbfb'
       )
