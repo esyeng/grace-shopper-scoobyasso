@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {fetchCart, modifyCart} from '../store/cart'
+import {fetchCart, modifySessionCart} from '../store/cart'
 import {connect} from 'react-redux'
 
 class Cart extends Component {
   render() {
     let cartTotal = 0
-    const {modifyCart} = this.props
+    const {modifySessionCart, user} = this.props
     return (
       <div>
         {this.props.cart.map((item, idx) => {
@@ -18,7 +18,11 @@ class Cart extends Component {
               <h5>Quantity - {item.quantity}</h5>
               <button
                 onClick={() => {
-                  modifyCart(idx, 'plus')
+                  if (user.id) {
+                    modifySessionCart(item, 'increase', user.id)
+                  } else {
+                    modifySessionCart(item, 'increase')
+                  }
                 }}
               >
                 +
@@ -26,7 +30,11 @@ class Cart extends Component {
               <button
                 onClick={() => {
                   if (item.quantity > 1) {
-                    modifyCart(idx, 'minus')
+                    if (user.id) {
+                      modifySessionCart(item, 'decrease', user.id)
+                    } else {
+                      modifySessionCart(item, 'decrease')
+                    }
                   }
                 }}
               >
@@ -34,7 +42,11 @@ class Cart extends Component {
               </button>
               <button
                 onClick={() => {
-                  modifyCart(idx, 'remove')
+                  if (user.id) {
+                    modifySessionCart(item, 'removeFromCart', user.id)
+                  } else {
+                    modifySessionCart(item, 'removeFromCart')
+                  }
                 }}
               >
                 Remove Item From Cart
@@ -51,6 +63,7 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     cart: state.cart
   }
 }
@@ -58,7 +71,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCart: id => dispatch(fetchCart(id)),
-    modifyCart: (idx, operation) => dispatch(modifyCart(idx, operation))
+    modifySessionCart: (product, operation, userId) =>
+      dispatch(modifySessionCart(product, operation, userId))
   }
 }
 
