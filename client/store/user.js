@@ -55,7 +55,9 @@ export const auth = (
   }
 
   try {
+    console.log('RUNNING AUTH THUNK', res.data)
     dispatch(getUser(res.data))
+    dispatch(fetchCart(res.data.id))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
@@ -66,6 +68,7 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
+    dispatch(fetchCart())
     history.push('/login')
   } catch (err) {
     console.error(err)

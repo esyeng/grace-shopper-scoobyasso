@@ -22,14 +22,6 @@ export const addToCart = product => {
   }
 }
 
-export const modifyCart = (idx, operation) => {
-  return {
-    type: MODIFY_CART,
-    idx,
-    operation
-  }
-}
-
 //thunk
 export const fetchCart = userId => {
   return async dispatch => {
@@ -45,13 +37,19 @@ export const fetchCart = userId => {
   }
 }
 
-export const addToSessionCart = (product, userId) => {
+export const modifySessionCart = (product, operation, userId) => {
   return async dispatch => {
     try {
+      const requestChange = {
+        product: {...product, quantity: 1},
+        operation,
+        userId
+      }
       const {data: modifiedCart} = await axios.put(
         `/api/cart/${userId ? userId : 'guest'}`,
-        {...product, quantity: 1}
+        requestChange
       )
+
       dispatch(setCart(modifiedCart))
     } catch (error) {
       console.error(error)
@@ -64,20 +62,6 @@ export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case SET_CART:
       return action.cart
-    case ADD_TO_CART:
-      return [...state, action.product]
-    case MODIFY_CART:
-      const modifiedCart = [...state]
-      if (action.operation === 'plus') {
-        modifiedCart[action.idx].quantity += 1
-      }
-      if (action.operation === 'minus') {
-        modifiedCart[action.idx].quantity -= 1
-      }
-      if (action.operation === 'remove') {
-        modifiedCart.splice(action.idx, 1)
-      }
-      return modifiedCart
     default:
       return state
   }

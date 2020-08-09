@@ -34,9 +34,9 @@ Order.belongsTo(User) // Order belongs to user (userId)
 Order.hasMany(OrderList)
 OrderList.belongsTo(Order)
 
-// Product.hasMany(OrderList)
-// OrderList.belongsTo(Product)
-Product.belongsToMany(Order, {through: OrderList})
+Product.hasMany(OrderList)
+OrderList.belongsTo(Product)
+// Product.belongsToMany(Order, {through: OrderList})
 
 Product.belongsTo(ArtCategory)
 
