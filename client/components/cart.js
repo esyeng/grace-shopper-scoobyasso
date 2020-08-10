@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {fetchCart, modifySessionCart} from '../store/cart'
+import {fetchCart, modifyCart} from '../store/cart'
 import {connect} from 'react-redux'
 
 class Cart extends Component {
   render() {
     let cartTotal = 0
-    const {modifySessionCart, user} = this.props
+    const {modifyCart, user} = this.props
     return (
       <div className="cartDiv">
         {this.props.cart.map((item, idx) => {
@@ -19,9 +19,9 @@ class Cart extends Component {
               <button
                 onClick={() => {
                   if (user.id) {
-                    modifySessionCart(item, 'increase', user.id)
+                    modifyCart(item, 'increase', user.id)
                   } else {
-                    modifySessionCart(item, 'increase')
+                    modifyCart(item, 'increase')
                   }
                 }}
               >
@@ -31,9 +31,9 @@ class Cart extends Component {
                 onClick={() => {
                   if (item.quantity > 1) {
                     if (user.id) {
-                      modifySessionCart(item, 'decrease', user.id)
+                      modifyCart(item, 'decrease', user.id)
                     } else {
-                      modifySessionCart(item, 'decrease')
+                      modifyCart(item, 'decrease')
                     }
                   }
                 }}
@@ -43,9 +43,9 @@ class Cart extends Component {
               <button
                 onClick={() => {
                   if (user.id) {
-                    modifySessionCart(item, 'removeFromCart', user.id)
+                    modifyCart(item, 'removeFromCart', user.id)
                   } else {
-                    modifySessionCart(item, 'removeFromCart')
+                    modifyCart(item, 'removeFromCart')
                   }
                 }}
               >
@@ -71,8 +71,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCart: id => dispatch(fetchCart(id)),
-    modifySessionCart: (product, operation, userId) =>
-      dispatch(modifySessionCart(product, operation, userId))
+    modifyCart: (product, operation, userId) =>
+      dispatch(modifyCart(product, operation, userId))
   }
 }
 

@@ -55,7 +55,6 @@ export const auth = (
   }
 
   try {
-    console.log('RUNNING AUTH THUNK', res.data)
     dispatch(getUser(res.data))
     dispatch(fetchCart(res.data.id))
     history.push('/home')

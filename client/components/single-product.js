@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleProduct} from '../store/singleProduct'
-import {modifySessionCart} from '../store/cart'
+import {modifyCart} from '../store/cart'
 import cart from './cart'
 
 class SingleProduct extends React.Component {
@@ -9,7 +9,7 @@ class SingleProduct extends React.Component {
     this.props.fetchSingleProduct(this.props.match.params.productId)
   }
   render() {
-    const {singleProduct, modifySessionCart, cart, history, user} = this.props
+    const {singleProduct, modifyCart, cart, history, user} = this.props
     return (
       <div className="singleProductContainer">
         <h1>{singleProduct.name}</h1>
@@ -23,9 +23,9 @@ class SingleProduct extends React.Component {
         <button
           onClick={() => {
             if (user.id) {
-              modifySessionCart(singleProduct, 'addToCart', user.id)
+              modifyCart(singleProduct, 'addToCart', user.id)
             } else {
-              modifySessionCart(singleProduct, 'addToCart')
+              modifyCart(singleProduct, 'addToCart')
             }
             // history.push('/cart')
           }}
@@ -47,8 +47,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchSingleProduct: id => dispatch(fetchSingleProduct(id)),
-    modifySessionCart: (product, operation, userId) =>
-      dispatch(modifySessionCart(product, operation, userId))
+    modifyCart: (product, operation, userId) =>
+      dispatch(modifyCart(product, operation, userId))
   }
 }
 
