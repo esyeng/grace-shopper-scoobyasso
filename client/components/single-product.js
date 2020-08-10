@@ -18,7 +18,8 @@ class SingleProduct extends React.Component {
           In Stock: {singleProduct.inventory}
         </div>
         <div className="singleProductDesc">{singleProduct.description}</div>
-        <img className="productImage" src={singleProduct.imageUrl} />
+        <img className="singleProductImage" src={singleProduct.imageUrl} />
+        <br />
         <button
           onClick={() => {
             if (user.id) {
