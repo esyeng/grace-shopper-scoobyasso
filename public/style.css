@@ -163,3 +163,25 @@ form div {
 .nav-cart-count {
   position: relative;
 }
+
+.cartDiv {
+  margin-left: 10px;
+}
+
+.cartProduct-image {
+  border-radius: 25px;
+  height: 100px;
+}
+.cartProduct {
+}
+
+.singleProductContainer {
+  margin-left: 10px;
+}
+
+.singleProductImage {
+  border-radius: 25px;
+  height: auto;
+  width: auto;
+  margin: 15px 15px 15px 0px;
+}

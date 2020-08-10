@@ -7,13 +7,13 @@ class Cart extends Component {
     let cartTotal = 0
     const {modifySessionCart, user} = this.props
     return (
-      <div>
+      <div className="cartDiv">
         {this.props.cart.map((item, idx) => {
           cartTotal += item.quantity * item.price
           return (
-            <div key={item.id}>
+            <div className="cartProduct" key={item.id}>
               <h3>{item.name}</h3>
-              <img src={item.imageUrl} />
+              <img className="cartProduct-image" src={item.imageUrl} />
               <h5>Unit Price - ${item.price / 100}</h5>
               <h5>Quantity - {item.quantity}</h5>
               <button
