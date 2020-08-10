@@ -127,6 +127,7 @@ router.get('/:userId', isUser, async (req, res, next) => {
 
 router.put('/:userId', isUser, async (req, res, next) => {
   try {
+    let operation = req.body.operation
     const order = await Order.findOne({
       where: {
         userId: req.params.userId,
@@ -137,22 +138,30 @@ router.put('/:userId', isUser, async (req, res, next) => {
     const cartItem = await OrderList.findOne({
       where: {
         orderId: order.id,
-        productId: req.body.id
+        productId: req.body.product.id
       }
     })
     if (!cartItem) {
       const newCartItem = await OrderList.create({
         orderId: order.id,
-        productId: req.body.id,
-        quantity: req.body.quantity,
-        unitPrice: req.body.price,
-        totalPrice: req.body.price
+        productId: req.body.product.id,
+        quantity: req.body.product.quantity,
+        unitPrice: req.body.product.price,
+        totalPrice: req.body.product.price
       })
     } else {
-      cartItem.update({
-        quantity: cartItem.quantity + 1,
-        totalPrice: cartItem.totalPrice + cartItem.unitPrice
-      })
+      if (operation === 'increase') {
+        await cartItem.update({
+          quantity: cartItem.quantity + 1,
+          totalPrice: cartItem.totalPrice + cartItem.unitPrice
+        })
+      }
+      if (operation === 'decrease') {
+        await cartItem.update({
+          quantity: cartItem.quantity - 1,
+          totalPrice: cartItem.totalPrice - cartItem.unitPrice
+        })
+      }
     }
 
     const updatedCart = await OrderList.findAll({

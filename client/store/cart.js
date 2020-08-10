@@ -37,7 +37,7 @@ export const fetchCart = userId => {
   }
 }
 
-export const modifySessionCart = (product, operation, userId) => {
+export const modifyCart = (product, operation, userId) => {
   return async dispatch => {
     try {
       const requestChange = {
