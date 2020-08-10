@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {fetchCart, modifyCart} from '../store/cart'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 class Cart extends Component {
   render() {
@@ -55,7 +56,7 @@ class Cart extends Component {
           )
         })}
         <h5>Cart Total: ${cartTotal / 100}</h5>
-        <button>Checkout</button>
+        <Link to={user.id ? `/checkout` : `/login`}>Checkout</Link>
       </div>
     )
   }
