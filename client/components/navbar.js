@@ -39,7 +39,8 @@ const Navbar = ({handleClick, isLoggedIn, cart}) => (
               </Link>
             </div>
             <Link className="linkLogin" to="/cart">
-              {cart.length} Cart
+              <span className="nav-cart-count">{cart.length} </span>
+              Cart
             </Link>
           </div>
         )}
