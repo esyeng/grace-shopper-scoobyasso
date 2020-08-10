@@ -162,6 +162,9 @@ router.put('/:userId', isUser, async (req, res, next) => {
           totalPrice: cartItem.totalPrice - cartItem.unitPrice
         })
       }
+      if (operation === 'removeFromCart') {
+        await cartItem.destroy()
+      }
     }
 
     const updatedCart = await OrderList.findAll({
