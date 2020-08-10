@@ -5,20 +5,24 @@ import {connect} from 'react-redux'
 class Cart extends Component {
   render() {
     let cartTotal = 0
-    const {modifyCart} = this.props
+    const {modifyCart, user} = this.props
     return (
-      <div>
+      <div className="cartDiv">
         {this.props.cart.map((item, idx) => {
           cartTotal += item.quantity * item.price
           return (
-            <div key={item.id}>
+            <div className="cartProduct" key={item.id}>
               <h3>{item.name}</h3>
-              <img src={item.imageUrl} />
+              <img className="cartProduct-image" src={item.imageUrl} />
               <h5>Unit Price - ${item.price / 100}</h5>
               <h5>Quantity - {item.quantity}</h5>
               <button
                 onClick={() => {
-                  modifyCart(idx, 'plus')
+                  if (user.id) {
+                    modifyCart(item, 'increase', user.id)
+                  } else {
+                    modifyCart(item, 'increase')
+                  }
                 }}
               >
                 +
@@ -26,7 +30,11 @@ class Cart extends Component {
               <button
                 onClick={() => {
                   if (item.quantity > 1) {
-                    modifyCart(idx, 'minus')
+                    if (user.id) {
+                      modifyCart(item, 'decrease', user.id)
+                    } else {
+                      modifyCart(item, 'decrease')
+                    }
                   }
                 }}
               >
@@ -34,7 +42,11 @@ class Cart extends Component {
               </button>
               <button
                 onClick={() => {
-                  modifyCart(idx, 'remove')
+                  if (user.id) {
+                    modifyCart(item, 'removeFromCart', user.id)
+                  } else {
+                    modifyCart(item, 'removeFromCart')
+                  }
                 }}
               >
                 Remove Item From Cart
@@ -51,6 +63,7 @@ class Cart extends Component {
 
 const mapStateToProps = state => {
   return {
+    user: state.user,
     cart: state.cart
   }
 }
@@ -58,7 +71,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCart: id => dispatch(fetchCart(id)),
-    modifyCart: (idx, operation) => dispatch(modifyCart(idx, operation))
+    modifyCart: (product, operation, userId) =>
+      dispatch(modifyCart(product, operation, userId))
   }
 }
 
