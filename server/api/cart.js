@@ -106,7 +106,9 @@ router.get('/:userId', isUser, async (req, res, next) => {
       include: Product
     })
     let userCart = []
+    let totalPrice = 0
     dbCart.map(item => {
+      totalPrice += item.totalPrice
       userCart.push({
         artCategoryId: item.product.artCategoryId,
         description: item.product.description,
@@ -118,6 +120,12 @@ router.get('/:userId', isUser, async (req, res, next) => {
         quantity: item.quantity
       })
     })
+    const orderTotalUpdate = await Order.update(
+      {orderTotal: totalPrice},
+      {
+        where: {id: cartId.id}
+      }
+    )
     res.json(userCart)
   } catch (err) {
     next(err)
@@ -134,8 +142,9 @@ router.put('/:userId', isUser, async (req, res, next) => {
         userId: req.params.userId,
         isCart: true
       },
-      attributes: ['id']
+      attributes: ['id', 'orderTotal']
     })
+
     const cartItem = await OrderList.findOne({
       where: {
         orderId: order.id,
@@ -150,21 +159,53 @@ router.put('/:userId', isUser, async (req, res, next) => {
         unitPrice: req.body.product.price,
         totalPrice: req.body.product.price
       })
+      await Order.update(
+        {orderTotal: order.orderTotal + newCartItem.unitPrice},
+        {
+          where: {
+            id: order.id
+          }
+        }
+      )
     } else {
       if (operation === 'increase') {
         await cartItem.update({
           quantity: cartItem.quantity + 1,
           totalPrice: cartItem.totalPrice + cartItem.unitPrice
         })
+        await Order.update(
+          {orderTotal: order.orderTotal + cartItem.unitPrice},
+          {
+            where: {
+              id: order.id
+            }
+          }
+        )
       }
       if (operation === 'decrease') {
         await cartItem.update({
           quantity: cartItem.quantity - 1,
           totalPrice: cartItem.totalPrice - cartItem.unitPrice
         })
+        await Order.update(
+          {orderTotal: order.orderTotal - cartItem.unitPrice},
+          {
+            where: {
+              id: order.id
+            }
+          }
+        )
       }
       if (operation === 'removeFromCart') {
         await cartItem.destroy()
+        await Order.update(
+          {orderTotal: order.orderTotal - cartItem.totalPrice},
+          {
+            where: {
+              id: order.id
+            }
+          }
+        )
       }
     }
 

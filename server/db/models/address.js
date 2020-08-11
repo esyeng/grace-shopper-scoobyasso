@@ -46,7 +46,7 @@ const Address = db.define('address', {
     defaultValue: 'United States' //create slider for all countries
   },
   zipcode: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true

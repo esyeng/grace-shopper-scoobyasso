@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Address} from './address-form'
 import {Payment} from './payment-form'
+import {placeOrder} from '../store/orders'
+import {fetchCart} from '../store/cart'
 
 class Checkout extends Component {
   constructor(props) {
@@ -12,8 +14,8 @@ class Checkout extends Component {
       street: '',
       city: '',
       zip: '',
-      state: '',
-      country: '',
+      state: 'AL',
+      country: 'United States',
       ccNum: '',
       cvc: '',
       expDate: '',
@@ -29,8 +31,8 @@ class Checkout extends Component {
     })
   }
 
-  handleSubmit() {
-    const {placeOrder, user} = this.props
+  async handleSubmit() {
+    const {placeOrder, fetchCart, user} = this.props
     const city = this.state.city
     const zip = this.state.zip
     const state = this.state.state
@@ -56,7 +58,10 @@ class Checkout extends Component {
         ccZip: this.state.ccZip
       }
     }
-    placeOrder(checkoutObj)
+    await placeOrder(checkoutObj).then(() => {
+      fetchCart(user.id)
+    })
+    this.props.history.push('/orderComplete')
   }
 
   render() {
@@ -93,7 +98,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    placeOrder: object => dispatch(placeOrder(object))
+    placeOrder: object => dispatch(placeOrder(object)),
+    fetchCart: userId => dispatch(fetchCart(userId))
   }
 }
 

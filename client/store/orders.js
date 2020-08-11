@@ -39,11 +39,8 @@ export const fetchOrder = userId => {
 export const placeOrder = checkoutObj => {
   return async dispatch => {
     try {
-      const {data: {updateOrder: newOrder}} = axios.put(
-        `/api/orders/checkout`,
-        checkoutObj
-      )
-      dispatch(orderPlace(newOrder))
+      const {data} = await axios.put(`/api/orders/checkout`, checkoutObj)
+      dispatch(orderPlace(data.completedOrder))
     } catch (error) {
       console.error(error)
     }
@@ -57,7 +54,7 @@ export default function orderReducer(state = initialState, action) {
     case GET_ORDERS:
       return action.orders
     case PLACE_ORDER:
-      return action.order
+      return [...state, action.order]
     default:
       return state
   }

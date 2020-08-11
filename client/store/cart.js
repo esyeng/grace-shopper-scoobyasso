@@ -29,7 +29,6 @@ export const fetchCart = userId => {
       const {data: cartFetched} = await axios.get(
         `/api/cart/${userId ? userId : 'guest'}`
       )
-      console.log(cartFetched)
       dispatch(setCart(cartFetched))
     } catch (err) {
       console.error(err)
