@@ -40,7 +40,7 @@ const Navbar = ({handleClick, isLoggedIn, cart}) => (
                 Home
               </Link>
               <Link className="linkLogin" to="/signup">
-                -Sign Up-
+                Sign Up
               </Link>
               <Link className="linkLogin" to="/login">
                 Login
@@ -56,6 +56,27 @@ const Navbar = ({handleClick, isLoggedIn, cart}) => (
           <hr />
         </div>
         <h3 className="tagline">Where art lives.</h3>
+        <div className="usefulLinks">
+          <Link to="/" className="smallLinks">
+            {' '}
+            Painting{' '}
+          </Link>
+          |
+          <Link to="/" className="smallLinks">
+            {' '}
+            Sculpture{' '}
+          </Link>{' '}
+          |
+          <Link to="/" className="smallLinks">
+            {' '}
+            Photography{' '}
+          </Link>{' '}
+          |
+          <Link to="/" className="smallLinks">
+            {' '}
+            Illustration{' '}
+          </Link>
+        </div>
       </nav>
     </div>
     {/* <hr /> */}
