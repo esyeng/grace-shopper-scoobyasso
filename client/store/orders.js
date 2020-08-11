@@ -25,8 +25,10 @@ export const orderPlace = order => {
 export const fetchOrder = userId => {
   return async dispatch => {
     try {
-      const {data: orderData} = await axios.get(`/api/orders/${userId}`)
-      dispatch(setOrders(orderData))
+      if (userId) {
+        const {data: orderData} = await axios.get(`/api/orders/${userId}`)
+        dispatch(setOrders(orderData))
+      }
     } catch (error) {
       console.error(error)
     }
