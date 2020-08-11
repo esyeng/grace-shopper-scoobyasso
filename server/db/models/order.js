@@ -16,10 +16,7 @@ const Order = db.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: true
   },
-  shipAddress: {
-    type: Sequelize.INTEGER
-  },
-  billAddress: {
+  addressId: {
     type: Sequelize.INTEGER
   }
 })
