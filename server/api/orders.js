@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, OrderList, Product} = require('../db/models')
+const {Order, OrderList, Product, Address} = require('../db/models')
 const isUser = require('../auth/isUser')
 
 function randomNum(min, max) {
@@ -8,24 +8,46 @@ function randomNum(min, max) {
 //checkout from PLACEORDER THUNK
 router.put('/checkout', isUser, async (req, res, next) => {
   try {
+    const {city, zip, state, street, country} = req.body.address
+    const {id, firstName, lastName} = req.body.user
+
+    const newAddress = await Address.create({
+      firstName: firstName,
+      lastName: lastName,
+      streetAddress: street,
+      city: city,
+      state: state,
+      country: country,
+      zipcode: zip,
+      userId: id
+    })
+
+    const addressId = newAddress.id
+
     const order = await Order.update(
-      {isCart: false, trackingNumber: randomNum(1000, 10000000)},
+      {
+        isCart: false,
+        trackingNumber: randomNum(1000, 10000000),
+        addressId: addressId,
+        isComplete: true
+      },
+
       {
         returning: true,
         where: {
-          userId: req.body.user.id,
+          userId: id,
           isCart: true
         }
       }
     )
-    const [rowsUpdated, [updatedOrder]] = order
-    console.log(updatedOrder)
-    const newUserCart = await Order.create({
-      userId: req.body.user.id
+    const [rowsUpdated, [completedOrder]] = order
+    // console.log(updatedOrder)
+    await Order.create({
+      userId: id
     })
     res.status(200).json({
       message: 'Checked out',
-      updatedOrder
+      completedOrder
     })
   } catch (error) {
     next(error)
@@ -35,12 +57,12 @@ router.put('/checkout', isUser, async (req, res, next) => {
 // GET /Orders >>> all Orders
 router.get('/:userId', isUser, async (req, res, next) => {
   try {
+    console.log('running get ORDERS ROUTE')
     const orders = await Order.findAll({
       where: {
         userId: req.params.userId,
         isCart: false
-      },
-      include: [OrderList]
+      }
     })
     res.json(orders)
   } catch (err) {

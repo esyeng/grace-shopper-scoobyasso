@@ -26,6 +26,11 @@ const Navbar = ({handleClick, isLoggedIn, cart}) => (
                 Cart
               </Link>
             </div>
+            <div>
+              <Link className="linkOrderHistory" to="/orderHistory">
+                Order History
+              </Link>
+            </div>
           </div>
         ) : (
           <div className="linksNavbar">

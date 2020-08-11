@@ -1,6 +1,7 @@
 import axios from 'axios'
 import history from '../history'
 import {fetchCart} from './cart'
+import {fetchOrder} from './orders'
 
 /**
  * ACTION TYPES
@@ -27,9 +28,10 @@ const removeUser = () => ({type: REMOVE_USER})
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    console.log(res.data)
+    console.log('RUNNING ME')
     dispatch(getUser(res.data || defaultUser))
     dispatch(fetchCart(res.data.id))
+    dispatch(fetchOrder(res.data.id))
   } catch (err) {
     console.error(err)
   }
@@ -44,6 +46,7 @@ export const auth = (
 ) => async dispatch => {
   let res
   try {
+    console.log('RUNNING AUTH')
     res = await axios.post(`/auth/${method}`, {
       firstName,
       lastName,
@@ -57,6 +60,7 @@ export const auth = (
   try {
     dispatch(getUser(res.data))
     dispatch(fetchCart(res.data.id))
+    dispatch(fetchOrder(res.data.id))
     history.push('/home')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
