@@ -32,11 +32,11 @@ const Navbar = ({handleClick, isLoggedIn, cart}) => (
               <Link className="linkLogin" to="/">
                 Home
               </Link>
+              <Link className="linkLogin" to="/signup">
+                -Sign Up-
+              </Link>
               <Link className="linkLogin" to="/login">
                 Login
-              </Link>
-              <Link className="linkLogin" to="/signup">
-                Sign Up
               </Link>
             </div>
             <Link className="linkLogin" to="/cart">
