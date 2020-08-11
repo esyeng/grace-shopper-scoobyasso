@@ -517,6 +517,11 @@ hr {
   text-align: center;
   padding-bottom: 200px;
 }
+.orderComplete {
+  padding-left: 30px;
+  text-align: center;
+  padding-bottom: 200px;
+}
 .buttnShift {
   position: relative;
   display: flex;
