@@ -23,11 +23,10 @@ html {
   /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   background: #f8f8ff;
   background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
   margin: 0;
   height: 100%;
 }
-@keyframes gradient {
+/* @keyframes gradient {
   0% {
     background-position: 0% 50%;
   }
@@ -37,7 +36,7 @@ html {
   100% {
     background-position: 0% 50%;
   }
-}
+} */
 
 a {
   text-decoration: none;
@@ -57,8 +56,20 @@ form div {
   display: inline-block;
 }
 
+/* Red border */
+hr {
+  border: 0px solid black;
+  height: 0px;
+  background: black;
+  overflow: hidden;
+  clear: none;
+  display: block;
+  width: 72%;
+  color: #ffff00;
+  height: 1px;
+}
+
 .productImage {
-  border-radius: 25px;
   display: block;
   object-position: center center;
   max-height: 100%;
@@ -69,15 +80,17 @@ form div {
 .productContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  margin: 0px;
+  justify-content: center;
 }
 
 .productDiv {
   border: 2px solid black;
-  border-radius: 25px;
   margin: 20px;
   padding: 10px;
   width: 10%;
+  flex-basis: 6em;
+  min-width: 25%;
 }
 
 .productNameDiv {
@@ -85,8 +98,13 @@ form div {
   margin-bottom: 10px;
 }
 
+.productName {
+  color: black;
+}
+
 .productName:hover {
-  color: #fcc003;
+  color: red;
+  text-transform: none;
 }
 
 .productDiv:hover {
@@ -98,25 +116,76 @@ form div {
   text-align: center;
 }
 
+.navContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .siteHeader {
+  align-self: center;
+  flex-grow: 1.2rem;
+  text-align: center;
+  border: 2px solid black;
+  padding: 20px 20px 20px 20px;
+  width: min-content;
+  color: black;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  font-style: italic;
+  font-variant: normal;
+  letter-spacing: 1.4px;
+}
+
+.tagline {
+  align-self: center;
+  flex-grow: 1.2rem;
+  text-align: center;
+  color: black;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 10pt;
+  font-weight: 800;
+  font-style: italic;
+  font-variant: normal;
+  letter-spacing: 1.4px;
+}
+
+.foot {
+  position: fixed bottom;
+  align-self: center;
+  flex-grow: 1.2rem;
+  text-align: center;
+  color: black;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 10pt;
+  font-weight: 800;
+  font-variant: normal;
+  letter-spacing: 1.4px;
+  padding-bottom: 20px;
+}
+
+/* .siteHeader {
   position: relative;
+  display: flex;
+  justify-content: center;
   transform: translate(200%, 15%);
   border: 2px solid black;
-  padding: 3px;
+  padding: 20px 20px 20px 20px;
   width: min-content;
   text-align: center;
   color: black;
   font-family: 'Open Sans Condensed', sans-serif;
   font-size: 30px;
   font-weight: 800;
+  font-style: italic;
+  font-variant: normal;
   letter-spacing: 1.4px;
-  text-shadow: 2px 2px yellow;
-  margin-left: 10px;
-}
+} */
 
 .linkLogin {
   position: relative;
-  /* text-align: center; */
+  justify-content: space-around;
   color: black;
   /* margin: 0.5em; */
   margin-top: 10px;
@@ -142,11 +211,9 @@ form div {
 
 .linkLogin:hover {
   color: red;
-  text-decoration: underline green;
-  text-shadow: 1px 1px 1px green, 1px 1px 1px green;
 }
 
-.usefulLinks {
+/* .usefulLinks {
   position: relative;
   transform: translate(575%);
   background-color: white;
@@ -155,7 +222,7 @@ form div {
   color: black;
   border: 2px solid black;
   text-align: center;
-}
+} */
 
 .smallText {
   font-weight: bold;
@@ -164,7 +231,7 @@ form div {
 .linksNavbar {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   margin: 0;
   padding: 0;
   list-style-type: none;

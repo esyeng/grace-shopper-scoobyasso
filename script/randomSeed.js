@@ -1,5 +1,6 @@
 const db = require('../server/db')
 let faker = require('faker')
+const imagesFolder = require('../public/images')
 const {green, red} = require('chalk')
 const {
   User,
@@ -9,6 +10,7 @@ const {
   Order,
   OrderList
 } = require('../server/db/models')
+const {image} = require('faker')
 // const Address = require('../server/db/models/address')
 
 // function randomFloat(min, max) {
@@ -41,6 +43,13 @@ const createArtCategories = num => {
   ]
   return categories
 }
+
+// const images = imagesFolder.map((imageFile) => imageFile)
+// const imageSeed = (images) => {
+//   for (let i = 0; i < images.length; i++) {
+//     images.forEach((image) => image)
+//   }
+// }
 
 const getRandomProducts = num => {
   let products = []
