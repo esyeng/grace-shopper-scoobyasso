@@ -13,50 +13,58 @@ class Cart extends Component {
           cartTotal += item.quantity * item.price
           return (
             <div className="cartProduct" key={item.id}>
-              <h3>{item.name}</h3>
-              <img className="cartProduct-image" src={item.imageUrl} />
-              <h5>Unit Price - ${item.price / 100}</h5>
-              <h5>Quantity - {item.quantity}</h5>
-              <button
-                onClick={() => {
-                  if (user.id) {
-                    modifyCart(item, 'increase', user.id)
-                  } else {
-                    modifyCart(item, 'increase')
-                  }
-                }}
-              >
-                +
-              </button>
-              <button
-                onClick={() => {
-                  if (item.quantity > 1) {
+              <h3 className="itemName">{item.name}</h3>
+              <h4 className="cartProduct-image">
+                <img src={item.imageUrl} />
+              </h4>
+              <div className="temp">
+                <h5 className="unitPrice">Unit Price - ${item.price / 100}</h5>
+                <h6 className="quantity">Quantity - {item.quantity}</h6>
+              </div>
+              <div className="buttnShift">
+                <button
+                  onClick={() => {
                     if (user.id) {
-                      modifyCart(item, 'decrease', user.id)
+                      modifyCart(item, 'increase', user.id)
                     } else {
-                      modifyCart(item, 'decrease')
+                      modifyCart(item, 'increase')
                     }
-                  }
-                }}
-              >
-                -
-              </button>
-              <button
-                onClick={() => {
-                  if (user.id) {
-                    modifyCart(item, 'removeFromCart', user.id)
-                  } else {
-                    modifyCart(item, 'removeFromCart')
-                  }
-                }}
-              >
-                Remove Item From Cart
-              </button>
+                  }}
+                >
+                  +
+                </button>
+                <button
+                  onClick={() => {
+                    if (item.quantity > 1) {
+                      if (user.id) {
+                        modifyCart(item, 'decrease', user.id)
+                      } else {
+                        modifyCart(item, 'decrease')
+                      }
+                    }
+                  }}
+                >
+                  -
+                </button>
+                <button
+                  onClick={() => {
+                    if (user.id) {
+                      modifyCart(item, 'removeFromCart', user.id)
+                    } else {
+                      modifyCart(item, 'removeFromCart')
+                    }
+                  }}
+                >
+                  Remove Item From Cart
+                </button>
+              </div>
             </div>
           )
         })}
-        <h5>Cart Total: ${cartTotal / 100}</h5>
-        <Link to={user.id ? `/checkout` : `/login`}>Checkout</Link>
+        <h5 className="cartTotal">Cart Total: ${cartTotal / 100}</h5>
+        <div className="chkBtn">
+          <Link to={user.id ? `/checkout` : `/login`}>Checkout</Link>
+        </div>
       </div>
     )
   }
