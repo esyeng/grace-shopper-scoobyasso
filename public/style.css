@@ -487,7 +487,11 @@ hr {
 }
 .cartProduct {
 }
-
+.loginPage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
 .orderHistoryDiv {
   position: relative;
   display: flex;
