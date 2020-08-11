@@ -6,7 +6,7 @@ const OrderComplete = props => {
   const lastOrder = orders[orders.length - 1]
   if (orders.length > 0) {
     return (
-      <div>
+      <div className="orderComplete">
         <h1>Thank you for giving us money</h1>
         <h2>Order Tracking Number: {lastOrder.trackingNumber}</h2>
         <h3>Order Total: ${lastOrder.orderTotal / 100}</h3>

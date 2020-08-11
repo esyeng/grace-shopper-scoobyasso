@@ -1,6 +1,6 @@
 const db = require('../server/db')
 let faker = require('faker')
-const imagesFolder = require('../public/images')
+// const imagesFolder = require('../public/images')
 const {green, red} = require('chalk')
 const {
   User,

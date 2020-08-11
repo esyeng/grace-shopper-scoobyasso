@@ -487,8 +487,37 @@ hr {
 }
 .cartProduct {
 }
-
+.loginPage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.orderHistoryDiv {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.tracking {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.orderTotal {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.orderDate {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
 .checkout {
+  padding-left: 30px;
+  text-align: center;
+  padding-bottom: 200px;
+}
+.orderComplete {
   padding-left: 30px;
   text-align: center;
   padding-bottom: 200px;
