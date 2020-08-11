@@ -11,10 +11,10 @@ class SingleProduct extends React.Component {
   render() {
     const {singleProduct, modifyCart, cart, history, user} = this.props
     return (
-      <div className="row">
+      <div>
         <div className="singleProductContainer">
-          <h1>{singleProduct.name}</h1>
-          <h2>${singleProduct.price / 100}</h2>
+          <h1 className="productHeader">{singleProduct.name}</h1>
+          <h3>${singleProduct.price / 100}</h3>
           <div className="singleProductStock">
             In Stock: {singleProduct.inventory}
           </div>
