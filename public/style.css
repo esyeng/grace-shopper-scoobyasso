@@ -20,13 +20,12 @@ body {
   padding: 0;
 }
 html {
-  /* background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); */
   background: #f8f8ff;
   background-size: 400% 400%;
   margin: 0;
   height: 100%;
 }
-/* @keyframes gradient {
+@keyframes gradient {
   0% {
     background-position: 0% 50%;
   }
@@ -36,7 +35,7 @@ html {
   100% {
     background-position: 0% 50%;
   }
-} */
+}
 
 a {
   text-decoration: none;
@@ -60,6 +59,7 @@ form div {
 hr {
   border: 0px solid black;
   height: 0px;
+  margin-top: 10px;
   background: black;
   overflow: hidden;
   clear: none;
@@ -108,7 +108,7 @@ hr {
 }
 
 .productDiv:hover {
-  background-color: #eeeec3;
+  background-color: beige;
 }
 
 .productPrice {
@@ -120,9 +120,16 @@ hr {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-top: 30px;
 }
 
 .siteHeader {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  margin: 0;
+  height: 100%;
   align-self: center;
   flex-grow: 1.2rem;
   text-align: center;
@@ -198,15 +205,72 @@ hr {
   border: 2px solid black;
 } */
 
-.loginBtn {
-  background-color: yellow;
-  background-color: yellow;
-  border-color: orange;
+.name {
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
+
+.information {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.loginBtn {
+  /* background-color: lightgray;
+  background-color: lightgray;
+  border-color: blue; */
+  background-color: transparent;
+  border: 2px solid black;
+  color: black;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 1.5rem;
+  width: max-content;
+  padding: 2px;
+}
+
+.googleSignup {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 60%;
+}
+
+.googleButton {
+  background-color: transparent;
+  color: black;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 1.5rem;
+  width: max-content;
+  padding: 2px;
+}
+
+.googleButton:hover {
+  background-color: #4d90fe;
+  background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: -moz-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: -ms-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: -o-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: linear-gradient(top, #4d90fe, #4787ed);
+
+  border: 1px solid #3079ed;
+  color: white;
+}
+
+.loginBtnPosition {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
 .loginBtn:hover {
-  background-color: orange;
-  background-color: orange;
-  border-color: yellow;
+  background-color: black;
+  color: white;
 }
 
 .linkLogin:hover {
@@ -251,16 +315,58 @@ hr {
 }
 
 .cartDiv {
-  margin-left: 10px;
+  /* margin-left: 10px; */
+  /* -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
+  width: 80%;
+  padding-bottom: 40%;
+  align-content: center;
+  align-items: center; */
+}
+
+.chkBtn {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 85%;
 }
 
 .cartProduct-image {
   border-radius: 25px;
   height: 100px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 .cartProduct {
 }
-
+.buttnShift {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.temp {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.itemName {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.cartTotal {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+/* .quantity {
+  position: relative;
+  display: flex;
+  justify-content: center;
+} */
 .singleProductContainer {
   margin-left: 10px;
 }
