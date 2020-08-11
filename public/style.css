@@ -242,14 +242,12 @@ hr {
   justify-content: center;
 }
 
-
 .loginBtn {
   /* background-color: lightgray;
   background-color: lightgray;
   border-color: blue; */
 }
 .loginBtn {
-
   background-color: transparent;
   border: 2px solid black;
   color: black;
@@ -403,6 +401,26 @@ hr {
 .cartProduct {
 }
 
+.orderHistoryDiv {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.tracking {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.orderTotal {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.orderDate {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
 .buttnShift {
   position: relative;
   display: flex;
@@ -438,4 +456,3 @@ hr {
   width: auto;
   margin: 15px 15px 15px 0px;
 }
-
