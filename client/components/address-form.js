@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 export const Address = props => {
   const {method, change, submit} = props
   return (
-    <div>
+    <div className="information">
       <form name={`${method} Address`}>
         <h1 className="checkoutHead">{`${method}`} Address:</h1>
         <div>

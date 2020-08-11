@@ -61,24 +61,16 @@ class Checkout extends Component {
 
   render() {
     return (
-      <div>
-        <div name="checkbox">
-          {/* <label className="isSameAsShip">
-            Billing address same as shipping address
-            <input
-              type="checkbox"
-              defaultChecked={this.state.isChecked}
-              onChange={this.handleChange}
-            />
-          </label> */}
-        </div>
+      <div className="checkout">
         <Address
           method="Shipping"
           submit={this.handleSubmit}
           change={this.handleChange}
         />
         <Payment change={this.handleChange} />
-        <button onClick={this.handleSubmit}>Place Order</button>
+        <button className="loginBtn" onClick={this.handleSubmit}>
+          Place Order
+        </button>
         {/* {this.state.isChecked ? '' : <Address method="Billing" />} */}
       </div>
     )
