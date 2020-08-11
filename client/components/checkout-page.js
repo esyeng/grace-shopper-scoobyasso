@@ -23,7 +23,7 @@ class Checkout extends Component {
       <div>
         <div name="checkbox">
           <label className="isSameAsShip">
-            same as shipping address
+            Billing address same as shipping address
             <input
               type="checkbox"
               defaultChecked={this.state.isChecked}
@@ -38,15 +38,15 @@ class Checkout extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    method: state.method
-  }
-}
+// const mapState = state => {
+//   return {
+//     method: state.method
+//   }
+// }
 const mapDispatch = dispatch => {
   return {
     //
   }
 }
 
-export default connect(mapState, mapDispatch)(Checkout)
+export default connect(null, mapDispatch)(Checkout)
