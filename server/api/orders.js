@@ -2,8 +2,8 @@ const router = require('express').Router()
 const {Order, OrderList, Product} = require('../db/models')
 const isUser = require('../auth/isUser')
 
-//checkout
-router.put('/', isUser, async (req, res, next) => {
+//checkout from PLACEORDER THUNK
+router.put('/checkout', isUser, async (req, res, next) => {
   try {
     const order = await Order.update(
       {isCart: false},

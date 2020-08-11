@@ -13,13 +13,27 @@ class Address extends Component {
 
   handleSubmit(e) {
     e.prevent.default()
+    const {placeOrder, user} = this.props
     const city = e.target.city.value
     const method = e.target.name
     const zip = e.target.zip.value
     const state = e.target.state.value
     const country = e.target.country.value
     const street = e.target.street.value
-    // dispatch(placeOrder())
+    const checkoutObj = {
+      address: {
+        city,
+        zip,
+        state,
+        street
+      },
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName
+      }
+    }
+    placeOrder(checkoutObj)
   }
 
   render() {
@@ -113,13 +127,15 @@ class Address extends Component {
   }
 }
 
-// const mapState = (state) => {
-//   method: state.method
-// }
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
 
 const mapDispatch = dispatch => {
   return {
-    sendAddress: () => dispatch(sendAddress())
+    placeOrder: object => dispatch(placeOrder(object))
   }
 }
 
