@@ -94,7 +94,8 @@ router.get('/:userId', isUser, async (req, res, next) => {
   try {
     const cartId = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCart: true
       },
       attributes: ['id']
     })

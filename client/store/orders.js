@@ -4,6 +4,7 @@ const initialState = []
 
 //ACTION TYPE
 const GET_ORDERS = 'GET_ORDERS'
+const PLACE_ORDER = 'PLACE_ORDER'
 
 export const setOrders = orders => {
   return {
@@ -12,6 +13,12 @@ export const setOrders = orders => {
   }
 }
 
+export const orderPlace = order => {
+  return {
+    type: PLACE_ORDER,
+    order
+  }
+}
 //THUNK
 
 //FETCHORDER THUNK WILL BE FOR GRABBING ORDER HISTORY
@@ -29,10 +36,14 @@ export const fetchOrder = userId => {
 // PLACEORDER THUNK FOR UPDATING ORDER WITH BILL/SHIP ADDRESS
 // IT WILL TAKE IN AN OBJECT WITH ADDRESS FORM DATA AND USER ID/FIRST/LASTNAME
 // AS KEY VALUE PAIRS
-export const placeOrder = object => {
+export const placeOrder = checkoutObj => {
   return async dispatch => {
     try {
-      console.log('hello')
+      const {data: {updateOrder: newOrder}} = axios.put(
+        `/api/orders/checkout`,
+        checkoutObj
+      )
+      dispatch(orderPlace(newOrder))
     } catch (error) {
       console.error(error)
     }
@@ -45,6 +56,8 @@ export default function orderReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ORDERS:
       return action.orders
+    case PLACE_ORDER:
+      return action.order
     default:
       return state
   }
