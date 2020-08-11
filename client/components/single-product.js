@@ -11,27 +11,30 @@ class SingleProduct extends React.Component {
   render() {
     const {singleProduct, modifyCart, cart, history, user} = this.props
     return (
-      <div className="singleProductContainer">
-        <h1>{singleProduct.name}</h1>
-        <h2>${singleProduct.price / 100}</h2>
-        <div className="singleProductStock">
-          In Stock: {singleProduct.inventory}
+      <div className="row">
+        <div className="singleProductContainer">
+          <h1>{singleProduct.name}</h1>
+          <h2>${singleProduct.price / 100}</h2>
+          <div className="singleProductStock">
+            In Stock: {singleProduct.inventory}
+          </div>
+          <div className="singleProductDesc">{singleProduct.description}</div>
+          <img className="singleProductImage" src={singleProduct.imageUrl} />
+          <br />
+          <button
+            className="addToCart"
+            onClick={() => {
+              if (user.id) {
+                modifyCart(singleProduct, 'addToCart', user.id)
+              } else {
+                modifyCart(singleProduct, 'addToCart')
+              }
+              history.push('/cart')
+            }}
+          >
+            Add To Cart
+          </button>
         </div>
-        <div className="singleProductDesc">{singleProduct.description}</div>
-        <img className="singleProductImage" src={singleProduct.imageUrl} />
-        <br />
-        <button
-          onClick={() => {
-            if (user.id) {
-              modifyCart(singleProduct, 'addToCart', user.id)
-            } else {
-              modifyCart(singleProduct, 'addToCart')
-            }
-            // history.push('/cart')
-          }}
-        >
-          Add To Cart
-        </button>
       </div>
     )
   }
