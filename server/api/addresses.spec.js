@@ -19,25 +19,18 @@ describe('Address routes', () => {
         lastName: 'Ross',
         streetAddress: '75 Happy Accident Blvd',
         city: 'Paradise Villa',
+        state: 'NY',
         country: 'United States',
         zipcode: 11111
       })
     })
 
-    it('gets all Addresses in an array', async () => {
+    it('gets deny response without admin access', async () => {
       const res = await request(app)
         .get('/api/address')
-        .expect(200)
-
-      expect(res.body).to.be.an('array')
-      expect(res.body[0].firstName).to.be.equal('Bob')
-    })
-    it('returns Address by id', async () => {
-      const res = await request(app)
-        .get('/api/address/1')
-        .expect(200)
-      const data = randomPlace.dataValues.city
-      expect(res.body.city).to.be.equal(data)
+        .expect(401)
+      console.log(res)
+      expect(res.text).to.equal('Denied.')
     })
   }) // end describe('/api/Addresss')
 }) // end describe('User routes')
