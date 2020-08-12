@@ -75,7 +75,7 @@ class Cart extends Component {
           })}
           <h5 className="cartTotal">Cart Total: ${cartTotal / 100}</h5>
           <div className="chkBtn">
-            <Link to={user.id ? `/checkout` : `/login`}>Checkout</Link>
+            <Link to={user.id ? `/checkout` : `/g-checkout`}>Checkout</Link>
           </div>
         </div>
       )
