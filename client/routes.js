@@ -11,9 +11,12 @@ import {
   Cart,
   Checkout,
   OrderComplete,
-  OrderHistory
+  OrderHistory,
+  GuestCheckout,
+  GuestOrder
 } from './components'
 import {me} from './store'
+import guestCheckout from './components/guest-checkout'
 
 /**
  * COMPONENT
@@ -35,6 +38,8 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/checkout" component={Checkout} />
+        <Route path="/g-checkout" component={GuestCheckout} />
+        <Route path="/g-order" component={GuestOrder} />
         {/* <Route path="/orderComplete" component={OrderComplete} /> */}
         {/* <Route path="/orderHistory" component={OrderHistory} /> */}
         {isLoggedIn && (
