@@ -21,10 +21,16 @@ module.exports = router
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.')
 } else {
+  // const googleConfig = {
+  //   clientID: process.env.GOOGLE_CLIENT_ID,
+  //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  //   callbackURL: process.env.GOOGLE_CALLBACK,
+  // }
+
   const googleConfig = {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: GOOGLE_CALLBACK
   }
 
   const strategy = new GoogleStrategy(
@@ -51,6 +57,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     '/',
     passport.authenticate('google', {scope: ['email', 'profile']})
   )
+  // router.get(
+  //   '/',
+  //   passport.authenticate('google', {scope: ['email', 'profile']})
+  // )
 
   router.get(
     '/callback',
