@@ -4,10 +4,12 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, cart}) => (
   <div>
-    <div>
-      <h1 className="siteHeader">SCOOBYASSO</h1>
+    <div className="navContainer">
+      <a href="/" className="siteHeader">
+        SCOOBYASSO
+      </a>
       <nav>
         {isLoggedIn ? (
           <div className="linksNavbar">
@@ -15,12 +17,18 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             <Link className="linkLogin" to="/">
               Home
             </Link>
-            <a href="#" onClick={handleClick}>
+            <a className="linkLogin" href="#" onClick={handleClick}>
               Logout
             </a>
             <div>
               <Link className="linkLogin" to="/cart">
+                <span className="nav-cart-count">{cart.length} </span>
                 Cart
+              </Link>
+            </div>
+            <div>
+              <Link className="linkLogin" to="/orderHistory">
+                Order History
               </Link>
             </div>
           </div>
@@ -31,21 +39,46 @@ const Navbar = ({handleClick, isLoggedIn}) => (
               <Link className="linkLogin" to="/">
                 Home
               </Link>
-              <Link className="linkLogin" to="/login">
-                Login
-              </Link>
               <Link className="linkLogin" to="/signup">
                 Sign Up
               </Link>
+              <Link className="linkLogin" to="/login">
+                Login
+              </Link>
             </div>
             <Link className="linkLogin" to="/cart">
+              <span className="nav-cart-count">{cart.length} </span>
               Cart
             </Link>
           </div>
         )}
+        <div>
+          <hr />
+        </div>
+        <h3 className="tagline">Where art lives.</h3>
+        <div className="usefulLinks">
+          <Link to="/" className="smallLinks">
+            {' '}
+            Painting{' '}
+          </Link>
+          |
+          <Link to="/" className="smallLinks">
+            {' '}
+            Sculpture{' '}
+          </Link>{' '}
+          |
+          <Link to="/" className="smallLinks">
+            {' '}
+            Photography{' '}
+          </Link>{' '}
+          |
+          <Link to="/" className="smallLinks">
+            {' '}
+            Illustration{' '}
+          </Link>
+        </div>
       </nav>
     </div>
-    <div className="usefulLinks">Useful Links</div>
     {/* <hr /> */}
   </div>
 )
@@ -55,7 +88,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    cart: state.cart
   }
 }
 
@@ -74,5 +108,6 @@ export default connect(mapState, mapDispatch)(Navbar)
  */
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  cart: PropTypes.array.isRequired
 }

@@ -15,6 +15,9 @@ const Order = db.define('order', {
   isCart: {
     type: Sequelize.BOOLEAN,
     defaultValue: true
+  },
+  addressId: {
+    type: Sequelize.INTEGER
   }
 })
 

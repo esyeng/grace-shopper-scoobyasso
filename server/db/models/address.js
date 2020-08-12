@@ -39,14 +39,14 @@ const Address = db.define('address', {
   },
   country: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    },
+    // allowNull: false,
+    // validate: {
+    //   notEmpty: true
+    // },
     defaultValue: 'United States' //create slider for all countries
   },
   zipcode: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true

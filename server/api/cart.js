@@ -32,19 +32,58 @@ router.get('/guest', async (req, res, next) => {
 
 router.put('/guest', async (req, res, next) => {
   try {
-    let addItem = req.body
-    let existed = false
-    req.session.cart.map(item => {
-      if (item.id === addItem.id) {
-        item.quantity += 1
-        existed = true
-      }
-      return item
-    })
-    if (!existed) {
-      req.session.cart.push(addItem)
+    const product = req.body.product
+    const modification = req.body.operation
+    if (!req.session.cart) {
+      req.session.cart = []
     }
-    res.json(req.session.cart)
+
+    if (modification === 'addToCart') {
+      let existed = false
+      req.session.cart.map(item => {
+        if (item.id === product.id) {
+          item.quantity += 1
+          existed = true
+        }
+        return item
+      })
+      if (!existed) {
+        req.session.cart.push(product)
+      }
+      res.json(req.session.cart)
+    }
+
+    if (modification === 'removeFromCart') {
+      let index
+      req.session.cart.map((item, idx) => {
+        if (item.id === product.id) {
+          index = idx
+        }
+        return item
+      })
+      req.session.cart.splice(index, 1)
+      res.json(req.session.cart)
+    }
+
+    if (modification === 'decrease') {
+      req.session.cart.map(item => {
+        if (item.id === product.id && item.quantity > 1) {
+          item.quantity -= 1
+        }
+        return item
+      })
+      res.json(req.session.cart)
+    }
+
+    if (modification === 'increase') {
+      req.session.cart.map(item => {
+        if (item.id === product.id) {
+          item.quantity += 1
+        }
+        return item
+      })
+      res.json(req.session.cart)
+    }
   } catch (error) {
     next(error)
   }
@@ -53,16 +92,40 @@ router.put('/guest', async (req, res, next) => {
 // GET /api/cart/userId >>> guest/user cart
 router.get('/:userId', isUser, async (req, res, next) => {
   try {
-    const dbCart = await Order.findOne({
+    const cartId = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCart: true
       },
-      include: {
-        model: OrderList
-      }
+      attributes: ['id']
     })
-    let userCart = req.session.cart
-
+    const dbCart = await OrderList.findAll({
+      where: {
+        orderId: cartId.id
+      },
+      include: Product
+    })
+    let userCart = []
+    let totalPrice = 0
+    dbCart.map(item => {
+      totalPrice += item.totalPrice
+      userCart.push({
+        artCategoryId: item.product.artCategoryId,
+        description: item.product.description,
+        id: item.product.id,
+        imageUrl: item.product.imageUrl,
+        inventory: item.product.inventory,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity
+      })
+    })
+    const orderTotalUpdate = await Order.update(
+      {orderTotal: totalPrice},
+      {
+        where: {id: cartId.id}
+      }
+    )
     res.json(userCart)
   } catch (err) {
     next(err)
@@ -73,19 +136,103 @@ router.get('/:userId', isUser, async (req, res, next) => {
 
 router.put('/:userId', isUser, async (req, res, next) => {
   try {
-    let cart = await Order.findOne({
+    let operation = req.body.operation
+    const order = await Order.findOne({
       where: {
-        userId: req.params.userId
+        userId: req.params.userId,
+        isCart: true
       },
-      include: {
-        model: OrderList
-      }
+      attributes: ['id', 'orderTotal']
     })
 
-    cart = await cart.update()
-    if (!cart || req.params.userId !== cart.userId) {
-      res.status(404).json('NOT FOUND')
-    } else res.json(cart)
+    const cartItem = await OrderList.findOne({
+      where: {
+        orderId: order.id,
+        productId: req.body.product.id
+      }
+    })
+    if (!cartItem) {
+      const newCartItem = await OrderList.create({
+        orderId: order.id,
+        productId: req.body.product.id,
+        quantity: req.body.product.quantity,
+        unitPrice: req.body.product.price,
+        totalPrice: req.body.product.price
+      })
+      await Order.update(
+        {orderTotal: order.orderTotal + newCartItem.unitPrice},
+        {
+          where: {
+            id: order.id
+          }
+        }
+      )
+    } else {
+      if (operation === 'increase') {
+        await cartItem.update({
+          quantity: cartItem.quantity + 1,
+          totalPrice: cartItem.totalPrice + cartItem.unitPrice
+        })
+        await Order.update(
+          {orderTotal: order.orderTotal + cartItem.unitPrice},
+          {
+            where: {
+              id: order.id
+            }
+          }
+        )
+      }
+      if (operation === 'decrease') {
+        await cartItem.update({
+          quantity: cartItem.quantity - 1,
+          totalPrice: cartItem.totalPrice - cartItem.unitPrice
+        })
+        await Order.update(
+          {orderTotal: order.orderTotal - cartItem.unitPrice},
+          {
+            where: {
+              id: order.id
+            }
+          }
+        )
+      }
+      if (operation === 'removeFromCart') {
+        await cartItem.destroy()
+        await Order.update(
+          {orderTotal: order.orderTotal - cartItem.totalPrice},
+          {
+            where: {
+              id: order.id
+            }
+          }
+        )
+      }
+    }
+
+    const updatedCart = await OrderList.findAll({
+      where: {
+        orderId: order.id
+      },
+      include: Product
+    })
+
+    let updatedUserCart = []
+    updatedCart.map(item => {
+      updatedUserCart.push({
+        artCategoryId: item.product.artCategoryId,
+        description: item.product.description,
+        id: item.product.id,
+        imageUrl: item.product.imageUrl,
+        inventory: item.product.inventory,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity
+      })
+    })
+    res.json(updatedUserCart)
+
+    // if (!cart || req.params.userId !== cart.userId) {
+    //   res.status(404).json('NOT FOUND')
   } catch (err) {
     next(err)
   }
