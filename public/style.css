@@ -496,6 +496,7 @@ hr {
   position: relative;
   display: flex;
   justify-content: center;
+  padding-bottom: 500px;
 }
 .tracking {
   position: relative;
@@ -518,6 +519,7 @@ hr {
   padding-bottom: 200px;
 }
 .orderComplete {
+  font-family: 'Open Sans Condensed', sans-serif;
   padding-left: 30px;
   text-align: center;
   padding-bottom: 200px;
